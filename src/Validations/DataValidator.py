@@ -13,12 +13,12 @@ class DataValidator:
                 print("Error: El número que has ingresado es inválido")
                 value = input("Ingresa un número válido: ")
     
-    def chooseOptionOf(self, optionsArray:np.ndarray) -> int:
+    def chooseOptionOf(self, optionsArray:np.ndarray, text:str) -> int:
         option:int
         
         for i in range(len(optionsArray)):
             print(f"{i+1}. {optionsArray[i]}")
         
-        option = self.validateInt(input("Elige el proceso que quieres realizar: "), len(optionsArray))
+        option = self.validateInt(text, len(optionsArray))
 
         return option - 1
