@@ -6,20 +6,20 @@ class Node:
         self.__next = None
         self.__prev = None
 
-    def get_data(self) -> any:
+    def getData(self) -> any:
         return self.__data
 
-    def get_next(self) -> Node:
+    def getNext(self) -> Node:
         return self.__next
 
-    def get_prev(self) -> Node:
+    def getPrev(self) -> Node:
         return self.__prev
 
-    def set_data(self, data):
+    def setData(self, data):
         self.__data = data
 
-    def set_next(self, next_node):
-        self.__next = next_node
+    def setNext(self, nextNode:Node):
+        self.__next = nextNode
 
-    def set_prev(self, prev_node):
-        self.__prev = prev_node
+    def setPrev(self, prevNode:Node):
+        self.__prev = prevNode
