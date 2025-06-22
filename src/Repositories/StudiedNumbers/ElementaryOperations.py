@@ -4,47 +4,82 @@ from Repositories.Numbers.Decimal import Decimal
 from Repositories.Numbers.Hexadecimal import Hexadecimal
 from Repositories.StudiedNumbers.NumeralSystem import NumeralSystem
 from Structures.LinkedList import LinkedList
+import numpy as np
 
 class ElementaryOperations:
-    
-    def __init__(self, numeralSystems:NumeralSystem):
-        self.__operations:LinkedList = LinkedList()
-        self.__checkElementaryOperations(numeralSystems.getSystem())
-    
-    def __checkElementaryOperations(self, numeralSystems:LinkedList):
-        classesOfNumeralSystems:dict[str:Number] = {
+    availableNumeralSystems:dict[str:Number] = {
             "binario" : Binary,
             "decimal" : Decimal,
             "hexadecimal" : Hexadecimal
         }
-        list = LinkedList()
+    
+    __validOperationCache:dict[str:LinkedList] = None
+    
+    def __init__(self, numeralSystems:NumeralSystem):
+        if (not isinstance(numeralSystems, NumeralSystem)):
+            raise ValueError("Error: Has ingresado sistemas numéricos inválidos")
+        
+        if (ElementaryOperations.__validOperationCache is None):
+            ElementaryOperations.__validOperationCache = {}
+            ElementaryOperations._initializeOperationCache()
+        
+        self.__operations:LinkedList = LinkedList()
+        self.__checkElementaryOperations(numeralSystems)
+    
+    @classmethod
+    def _initializeOperationCache(cls):
+        for numeralSystemName in cls.availableNumeralSystems.keys():
+            numeralSystem:Number = cls.availableNumeralSystems.get(numeralSystemName)
+            elementaryOperations:LinkedList = cls.__checkElementaryOperationsOf(numeralSystem)
+            cls.__validOperationCache[numeralSystemName] = elementaryOperations
+            
+    @classmethod
+    def __checkElementaryOperationsOf(cls, numeralSystem:Number) -> LinkedList:
+        if (not issubclass(numeralSystem, Number)):
+            raise ValueError("Error: Haz ingresado un sistema numérico inválido")
+        
+        elementaryOperations = LinkedList()
+        operationsToTest = {
+            "+": lambda a, b: a + b,
+            "-": lambda a, b: a - b,
+            "*": lambda a, b: a * b,
+            "/": lambda a, b: a / b,
+            "//": lambda a, b: a // b,
+        }
+        
+        testDigit:str = numeralSystem.getDigits()[1]
+        numberToTest:Number = numeralSystem(testDigit)
+        
+        for operation in operationsToTest.keys():
+            try:
+                operationsToTest.get(operation)(numberToTest, numberToTest)
+                elementaryOperations.addLast(operation)
+            except (TypeError, NotImplementedError) as error:
+                pass
+
+        return elementaryOperations
+    
+    def __checkElementaryOperations(self, numeralSystems:NumeralSystem):
+        lists = LinkedList()
+        numeralSystems = numeralSystems.getSystem()
         
         for i in range(numeralSystems.getSize()):
-            list.addLast(classesOfNumeralSystems[numeralSystems.get(i)].getElementaryOperations())
-
-        elementaryOperations = self.__findCommonStrings(list)
+            availableOperations:LinkedList = ElementaryOperations.__validOperationCache.get(numeralSystems.get(i))
+            lists.addLast(availableOperations)
+        
+        elementaryOperations = self.__findMinorList(lists)
         self.__operations = elementaryOperations
     
-    def __findCommonStrings(self, listOfLists:LinkedList) -> LinkedList:
-        if not listOfLists:
+    def __findMinorList(self, lists:LinkedList) -> LinkedList:
+        if not lists:
             raise ValueError("Error: La lista de listas es inválida")
         
-        commonItems = LinkedList()
+        systemWithLessOperationsIndex:int = 0
+        for i in range(lists.getSize()):
+            if (lists.get(i).getSize() < lists.get(systemWithLessOperationsIndex).getSize()):
+                systemWithLessOperationsIndex = i
         
-        firstList:LinkedList = listOfLists.get(0)
-        for i in range(firstList.getSize()):
-            if (not commonItems.contains(firstList.get(i))):
-                commonItems.addLast(firstList.get(i))
-                
-        for i in range(1, listOfLists.getSize()):
-            currentList:LinkedList = listOfLists.get(i)
-            temporalList = LinkedList()
-            for i in range(commonItems.getSize()):
-                if currentList.contains(commonItems.get(i)):
-                    temporalList.addLast(commonItems.get(i))
-            commonItems = temporalList
-                
-        return commonItems
+        return lists.get(systemWithLessOperationsIndex)
     
     def __str__(self):
         text = ""
