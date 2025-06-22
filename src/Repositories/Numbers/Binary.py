@@ -7,45 +7,18 @@ class Binary(Number):
     _base:int = len(_digits)
     
     def __init__(self, value:str):
-        self._value = ""
-        self._validateAndSetValue(value)
+        super().__init__(value)
     
-    @property
     def value(self):
         return self._value
     
     @property
     def digits(self):
         return self._digits
+
+    @classmethod
+    def getDigits(self):
+        return self._digits
     
-    @property
     def base(self):
         return self._base
-
-    @staticmethod
-    def getElementaryOperations() -> LinkedList:
-        list = LinkedList()
-        number1 = Binary("101")
-        number2 = Binary("111")
-        try:
-            number1 + number2
-            list.addLast("+")
-        except TypeError as error:
-            pass
-        try:
-            number1 - number2
-            list.addLast("-")
-        except TypeError as error:
-            pass
-        try:
-            number1 * number2
-            list.addLast("*")
-        except TypeError as error:
-            pass
-        try:
-            number1 / number2
-            list.addLast("/")
-        except TypeError as error:
-            pass
-        
-        return list
