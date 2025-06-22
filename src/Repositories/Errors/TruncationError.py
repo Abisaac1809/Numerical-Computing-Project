@@ -6,7 +6,7 @@ class TruncationError(AbsoluteError, RelativeError):
     __relativeError:float = 0.0
 
     def __init__(self, exactValue:float, aproximatedValue:float):
-        if (not self.__floatIsValid(exactValue) and not self.__floatIsValid(aproximatedValue)):
+        if (not isinstance(exactValue, float) and not isinstance(aproximatedValue, float)):
             raise ValueError("Error: Solo se aceptan valores float")
         
         self._calculateAndSetAbsoluteError(exactValue, aproximatedValue)
@@ -17,11 +17,3 @@ class TruncationError(AbsoluteError, RelativeError):
 Error por truncamiento: {self.__absoluteError} unidades
 El error representa un {self.__relativeError * 100}% del valor exacto
     """
-        
-        
-    def __floatIsValid(self, value:float) -> bool:
-        try:
-            float(value)
-            return True
-        except (TypeError, ValueError):
-            return False

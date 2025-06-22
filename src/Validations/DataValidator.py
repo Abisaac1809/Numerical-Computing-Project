@@ -19,6 +19,6 @@ class DataValidator:
         for i in range(len(optionsArray)):
             print(f"{i+1}. {optionsArray[i]}")
         
-        option = self.validateInt(text, len(optionsArray))
+        option = self.validateInt(input(text), len(optionsArray))
 
         return option - 1

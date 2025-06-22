@@ -2,7 +2,7 @@ class RelativeError:
     __value:float = 0.0
     
     def __init__(self, exactValue:float, aproximatedValue:float):
-        if (not self.__floatIsValid(exactValue) and not self.__floatIsValid(aproximatedValue)):
+        if (not isinstance(exactValue, float) and not isinstance(aproximatedValue, float)):
             raise ValueError("Error: Solo se aceptan valores float")
         
         self._calculateAndSetRelativeError(exactValue, aproximatedValue)
@@ -15,10 +15,3 @@ class RelativeError:
         
     def __str__(self) -> str:
         return f"Error Relativo: {self.__value * 100}%"
-    
-    def __floatIsValid(self, value:float) -> bool:
-        try:
-            float(value)
-            return True
-        except (TypeError, ValueError):
-            return False

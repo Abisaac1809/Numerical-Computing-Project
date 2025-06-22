@@ -2,37 +2,41 @@ class SignificantFigures:
     __value = 0
     
     def __init__(self, value:str):
-        self.__checkSignificantFigures(value)
+        self.__value = self.__calculateSignificantFigures(value)
     
-    def __checkSignificantFigures(self, value:str) -> None:
-        self.__validateValue(value)
-        
-        significantFigures:int = 0
+    def __calculateSignificantFigures(self, value:str):
+        self.__validateInput(value)
         
         for char in value:
-            if (char == "0" and significantFigures == 0):
+            if char.lower() in "abcdef":
+                return "No aplica"
+        
+        significantFigures = 0
+        leadingZero = True
+        
+        for char in value:
+            if char == "0" and significantFigures == 0:
                 continue
-            elif (char != "."):
+            elif char != ".":
                 significantFigures += 1
-    
-        self.__value = significantFigures
+        
+        return significantFigures
 
-    def __validateValue(self, value:str) -> None:
-        if (isinstance(value, str)):
-            validValues = "-.0123456789abcdefABCDEF"
-            numberOfPoints = 0
-            for char in value:
-                if (char not in validValues):
-                    raise ValueError("Error: El valor ingresado posee caracteres no válidos")
-                elif (char == "." and numberOfPoints == 1):
-                    raise ValueError("Error: El formato del número con punto decimal es incorrecto")
-                elif (char == "."): 
-                    numberOfPoints += 1
-        else:
+    def __validateInput(self, value:str) -> None:
+        if not isinstance(value, str):
             raise ValueError("Error: El valor ingresado debe ser un string")
-
+        
+        validChars = ".0123456789abcdefABCDEF"
+        
+        for char in value:
+            if char not in validChars:
+                raise ValueError("Error: El valor ingresado posee caracteres inválidos")
+        
+        if value.count(".") > 1:
+            raise ValueError("Error: El formato del número con punto decimal es incorrecto")
+        
     def getValue(self):
         return self.__value
     
     def __str__(self):
-        return f"{self.__value}"
+        return str(self.__value)
