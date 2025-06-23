@@ -34,7 +34,7 @@ class ScanNumbers(FileProcess):
         fileWriter.writeResultsToFile(numbers, readedFileSerial)
         
         print("Se ha escaneado con éxito el archivo")
-    
+
     def __fillNumbersArray(self, numbers:np.ndarray, scannedValues:np.ndarray) -> None:
         for i in range(len(scannedValues)):
             for j in range(len(scannedValues[i])):

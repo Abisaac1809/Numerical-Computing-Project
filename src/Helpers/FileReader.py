@@ -69,11 +69,10 @@ class FileReader:
             line = file.readline().decode("utf-8")
             while (line):
                 content = line.split("#")
-                
                 for j in range(len(content)):
                     if (len(content[j]) == 0):
                         continue
-                    result_array[i][j] = content[j]
+                    result_array[i][j] = content[j].strip()
                 
                 i += 1
                 line = file.readline().decode("utf-8")
