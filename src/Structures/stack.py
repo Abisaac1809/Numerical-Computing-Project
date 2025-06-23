@@ -1,4 +1,4 @@
-from Structures.nodeDePila import Node
+from Structures.Node import Node
 
 class Stack:
     def __init__(self):
@@ -7,25 +7,25 @@ class Stack:
     
     def push(self, data):
         new_node = Node(data=data)
-        new_node.set_next(self.stack)
+        new_node.setNext(self.stack)
         self.stack = new_node
         self.size += 1
     
     def pop(self):
-        if self.is_empty():
+        if self.isEmpty():
             raise ValueError("- StackError: la pila esta vacia")
-        data = self.stack.get_data()
-        self.stack = self.stack.get_next()
+        data = self.stack.getData()
+        self.stack = self.stack.getNext()
         self.size -= 1
         return data
     
     def show_stack(self):
-        if self.is_empty():
+        if self.isEmpty():
             raise ValueError("- StackError: la pila esta vacia")
-        return self.stack.get_data()
+        return self.stack.getData()
     
     def get_size(self):
         return self.size
     
-    def is_empty(self):
+    def isEmpty(self):
         return self.stack is None and self.size == 0
