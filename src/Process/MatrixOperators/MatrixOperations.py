@@ -51,3 +51,32 @@ class MatrixOperations:
             for j in range(matrix.shape[1]):
                 result[j, i] = matrix[i, j]
         return result
+
+    def inverse(self, matrix):
+        if not self.validator.can_invert(matrix):
+            raise ValueError("Matriz no es cuadrada o es singular")
+        
+        n = matrix.shape[0]
+        det = self.validator._determinant(matrix)
+        
+        if n == 1:
+            return np.array([[1 / matrix[0, 0]]])
+        
+        # Matriz de cofactores
+        cofactors = np.zeros((n, n))
+        for i in range(n):
+            for j in range(n):
+                minor = np.delete(np.delete(matrix, i, axis=0), j, axis=1)
+                cofactor = (-1) ** (i + j) * self.validator._determinant(minor)
+                cofactors[i, j] = cofactor
+        
+        # Adjunta (transpuesta de cofactores)
+        adjugate = self.transpose(cofactors)
+        
+        # Inversa (adjunta/determinante)
+        inverse = np.zeros((n, n))
+        for i in range(n):
+            for j in range(n):
+                inverse[i, j] = adjugate[i, j] / det
+        
+        return inverse
