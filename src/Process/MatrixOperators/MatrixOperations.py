@@ -44,3 +44,10 @@ class MatrixOperations:
             for j in range(matrix.shape[1]):
                 result[i, j] = matrix[i, j] * scalar
         return result
+    
+    def transpose(self, matrix):
+        result = np.zeros((matrix.shape[1], matrix.shape[0]))
+        for i in range(matrix.shape[0]):
+            for j in range(matrix.shape[1]):
+                result[j, i] = matrix[i, j]
+        return result
