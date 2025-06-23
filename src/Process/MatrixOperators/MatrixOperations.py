@@ -37,3 +37,10 @@ class MatrixOperations:
                     sum_val += matrix_a[i, k] * matrix_b[k, j]
                 result[i, j] = sum_val
         return result
+    
+    def scalar_multiply(self, matrix, scalar):
+        result = np.zeros((matrix.shape[0], matrix.shape[1]))
+        for i in range(matrix.shape[0]):
+            for j in range(matrix.shape[1]):
+                result[i, j] = matrix[i, j] * scalar
+        return result
