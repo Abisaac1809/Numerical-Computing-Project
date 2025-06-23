@@ -22,7 +22,6 @@ class FileReader:
         except FileNotFoundError as error:
             ErrorLogger.LogError(error)
             raise FileNotFoundError(f"Error: No se ha encontrado archivos en el directorio {self.__binaryFilesDir}")
-
         except NotADirectoryError as error:
             ErrorLogger.LogError(error)
             raise NotADirectoryError("Error: Ocurrió un error inesperado al leer el archivo")
@@ -75,6 +74,11 @@ class FileReader:
                     if (len(content[j]) == 0):
                         continue
                     result_array[i][j] = content[j].strip()
+                
+                for j in range(len(content)):
+                    if (len(content[j]) == 0):
+                        continue
+                    result_array[i][j] = content[j]
                 
                 i += 1
                 line = file.readline().decode("utf-8")

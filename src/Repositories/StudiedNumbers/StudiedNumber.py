@@ -15,6 +15,7 @@ class StudiedNumber:
     def __validateAndSetValue(self, value:str) -> None:
         if value is None:
             raise NoneType("Error: Has ingresado un valor nulo")
+
         if not isinstance(value, str):
             raise ValueError("Error: El valor ingresado debe ser un string")
         
@@ -26,6 +27,7 @@ class StudiedNumber:
         
             if value.count(".") > 1:
                 raise NumberIsInvalid("Error: El formato del número con punto decimal es incorrecto")
+
             
             self.__value = value
 

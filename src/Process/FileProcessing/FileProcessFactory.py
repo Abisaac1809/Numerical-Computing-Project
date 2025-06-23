@@ -7,6 +7,10 @@ class FileProcessFactory:
     __processes:dict = {
         "Escanear archivo de números" : ScanNumbers,
         "Resolver sistema de ecuaciones" : SolveEquationSystem
+
+class FileProcessFactory:
+    __processes:dict = {
+        "Escanear archivo de números" : ScanNumbers
     }
     
     def getAvailableProcesses(self) -> np.ndarray:

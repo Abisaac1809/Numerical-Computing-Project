@@ -27,6 +27,7 @@ class ScanNumbers(FileProcess):
             ErrorLogger.LogError(error)
             print(f"Lo sentimos, ha ocurrido un error que impide realizar la operación: {error}")
             return
+        availableFiles:np.ndarray = fileReader.getFileList()
         
         print("Archivos disponibles para escanear\n")
         filePosition = dataValidator.chooseOptionOf(availableFiles, "Ingresa el archivo que quieres escanear: ")
