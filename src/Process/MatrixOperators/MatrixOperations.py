@@ -16,7 +16,6 @@ class MatrixOperations:
         return result
     
     def subtract(self, matrix_a, matrix_b):
-        """Resta dos matrices usando bucles for"""
         if not self.validator.can_add_or_subtract(matrix_a, matrix_b):
             raise ValueError("Las matrices no tienen las mismas dimensiones")
         
@@ -24,4 +23,17 @@ class MatrixOperations:
         for i in range(matrix_a.shape[0]):
             for j in range(matrix_a.shape[1]):
                 result[i, j] = matrix_a[i, j] - matrix_b[i, j]
+        return result
+    
+    def multiply(self, matrix_a, matrix_b):
+        if not self.validator.can_multiply(matrix_a, matrix_b):
+            raise ValueError("Número de columnas de A debe coincidir con filas de B")
+        
+        result = np.zeros((matrix_a.shape[0], matrix_b.shape[1]))
+        for i in range(matrix_a.shape[0]):
+            for j in range(matrix_b.shape[1]):
+                sum_val = 0
+                for k in range(matrix_a.shape[1]):
+                    sum_val += matrix_a[i, k] * matrix_b[k, j]
+                result[i, j] = sum_val
         return result
