@@ -32,7 +32,7 @@ class SystemOfEquationsSolver:
             
             pivot = augmentedMatrix[column, column]
             if pivot == 0:
-                raise ValueError("La matriz es singular y no puede resolverse.")
+                raise ValueError("Error: La matriz es singular y no puede resolverse.")
             
             augmentedMatrix[column, column:] /= pivot
             
@@ -46,8 +46,7 @@ class SystemOfEquationsSolver:
     def gaussJordanStaggeredPivoting(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
         if not isinstance(coefficients, np.ndarray) or not isinstance(independents, np.ndarray):
             raise ValueError("Error: Has ingresado una matriz inválida")
-        print(coefficients)
-        print(independents)
+        
         coefficientsColumns = len(coefficients[0])
         augmentedMatrix = self.concatenateMatrixAndVector(coefficients, independents)
         scalingFactors = self.searchScalingFactorsIn(coefficients)
@@ -83,7 +82,7 @@ class SystemOfEquationsSolver:
                     for columna in range(pivotColumn, len(augmentedMatrix[pivotRow])):
                         augmentedMatrix[indexRow][columna] -= valueToEliminate * augmentedMatrix[pivotRow][columna]
                     
-        return augmentedMatrix
+        return augmentedMatrix[:,-1]
 
     def gaussJordanFullPivoting(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
         if not isinstance(coefficients, np.ndarray) or not isinstance(independents, np.ndarray):
@@ -128,8 +127,6 @@ class SystemOfEquationsSolver:
             raise ValueError("Error: Has ingresado una matriz inválida")
 
         concatenatedMatrix = np.zeros((len(matrix), len(matrix) + 1), dtype=np.float64)
-        print(matrix)
-        print(vector)
         for i in range(len(matrix)):
             concatenatedMatrix[i][:len(matrix[i])] = matrix[i]
             concatenatedMatrix[i][-1] = vector[i]
@@ -182,30 +179,30 @@ class SystemOfEquationsSolver:
                 orderedVector[targetIndex] = currentResult
         return orderedVector
     
-    def gaussSeidel(self, tol=1e-6, max_iter=1000):
-        n = len(self.b)
+    def gaussSeidel(self, coefficients:np.ndarray, independents:np.ndarray, tol=1e-6, maxIter=1000):
+        n = len(independents)
         x = np.zeros(n)
         
-        for _ in range(max_iter):
-            x_prev = x.copy()
+        for _ in range(maxIter):
+            xPrev = x.copy()
             for i in range(n):
                 sum1 = 0.0
                 for j in range(i):
-                    sum1 += self.A[i, j] * x[j]
+                    sum1 += coefficients[i, j] * x[j]
                 
                 sum2 = 0.0
                 for j in range(i + 1, n):
-                    sum2 += self.A[i, j] * x_prev[j]
+                    sum2 += coefficients[i, j] * xPrev[j]
                 
-                x[i] = (self.b[i] - sum1 - sum2) / self.A[i, i]
+                x[i] = (independents[i] - sum1 - sum2) / coefficients[i, i]
             
             error = 0.0
             for i in range(n):
-                error += (x[i] - x_prev[i]) ** 2
+                error += (x[i] - xPrev[i]) ** 2
             error = error ** 0.5
             
             if error < tol:
                 return x
         
-        print(f"Gauss-Seidel no convergió después de {max_iter} iteraciones.")
+        print(f"Gauss-Seidel no convergió después de {maxIter} iteraciones.")
         return x
