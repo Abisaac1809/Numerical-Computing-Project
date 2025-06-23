@@ -39,3 +39,16 @@ class FileWriter:
                 for j in range(len(dataArray[i])):
                     if dataArray[i][j]:
                         file.write(dataArray[i][j].__str__())
+
+    def writeSystemOfEquationResult(self, dataArray: np.ndarray, inputSerial: str) -> str:
+        if not isinstance(dataArray, np.ndarray) or dataArray.size == 0:
+            raise ValueError("Los datos deben ser un array numpy no vacío")
+            
+        fileName = self.__generateFileName(inputSerial)
+        filePath = self.__resultsDir / fileName
+        
+        with open (filePath, "w", encoding="utf-8") as file:
+            file.write("Resultados del sistema de ecuaciones")
+            file.write("\n")
+            for i in range(len(dataArray)):
+                file.write(f"x{i+1} = {dataArray[i]}\n")
