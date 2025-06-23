@@ -75,6 +75,7 @@ class FileReader:
                     if (len(content[j]) == 0):
                         continue
                     result_array[i][j] = content[j].strip()
+
                 
                 i += 1
                 line = file.readline().decode("utf-8")
