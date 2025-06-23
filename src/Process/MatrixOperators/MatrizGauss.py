@@ -28,3 +28,31 @@ class MatrizGauss:
                     Ab[k, i:] -= factor * Ab[i, i:]
         
         return Ab[:, -1]
+
+    def gauss_seidel(self, tol=1e-6, max_iter=1000):
+        n = len(self.b)
+        x = np.zeros(n)
+        
+        for _ in range(max_iter):
+            x_prev = x.copy()
+            for i in range(n):
+                sum1 = 0.0
+                for j in range(i):
+                    sum1 += self.A[i, j] * x[j]
+                
+                sum2 = 0.0
+                for j in range(i + 1, n):
+                    sum2 += self.A[i, j] * x_prev[j]
+                
+                x[i] = (self.b[i] - sum1 - sum2) / self.A[i, i]
+            
+            error = 0.0
+            for i in range(n):
+                error += (x[i] - x_prev[i]) ** 2
+            error = error ** 0.5
+            
+            if error < tol:
+                return x
+        
+        print(f"Gauss-Seidel no convergió después de {max_iter} iteraciones.")
+        return x
