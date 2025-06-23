@@ -26,7 +26,7 @@ class SignificantFigures:
         if not isinstance(value, str):
             raise ValueError("Error: El valor ingresado debe ser un string")
         
-        validChars = ".0123456789abcdefABCDEF"
+        validChars = "-.0123456789abcdefABCDEF"
         
         for char in value:
             if char not in validChars:

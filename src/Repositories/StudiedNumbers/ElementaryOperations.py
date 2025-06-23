@@ -92,7 +92,8 @@ class ElementaryOperations:
 
     def __validateValue(self, value:str) -> None:
         if (value.__class__.__name__ == "str"):
-            validChars = ".0123456789abcdefABCDEF"
+            validChars = "-.0123456789abcdefABCDEF"
+
             numberOfPoints = 0
             for char in value:
                 if (char not in validChars):

@@ -18,21 +18,24 @@ class NumeralSystem:
             self.__systems.addLast("hexadecimal")
     
     def __isBinary(self, value:str) -> bool:
-        validChars = ".01"
+        validChars = "-.01"
+        
         for char in value:
             if char not in validChars:
                 return False
         return True
 
     def __isDecimal(self, value:str) -> bool:
-        validChars = ".0123456789"
+        validChars = "-.0123456789"
+
         for char in value:
             if char not in validChars:
                 return False
         return True
 
     def __isHexadecimal(self, value:str) -> bool:
-        validChars = ".0123456789abcdefABCDEF"
+        validChars = "-.0123456789abcdefABCDEF"
+        
         for char in value:
             if char not in validChars:
                 return False
@@ -53,9 +56,9 @@ class NumeralSystem:
     def __validateInput(self, value:str) -> None:
         if not isinstance(value, str):
             raise ValueError("Error: El valor ingresado debe ser un string")
-        
-        validChars = ".0123456789abcdefABCDEF"
-        
+
+        validChars = "-.0123456789abcdefABCDEF"
+
         for char in value:
             if char not in validChars:
                 raise ValueError("Error: El valor ingresado posee caracteres inválidos")

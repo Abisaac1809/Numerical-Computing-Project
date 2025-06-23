@@ -1,3 +1,4 @@
+from Process.ErrorHandling.Exceptions import *
 from Repositories.StudiedNumbers.SignificantFigures import SignificantFigures
 from Repositories.StudiedNumbers.NumeralSystem import NumeralSystem
 from Repositories.StudiedNumbers.Bases import Bases
@@ -12,18 +13,20 @@ class StudiedNumber:
         self.__elementaryOperations:ElementaryOperations = ElementaryOperations(self.__numeralSystem)
 
     def __validateAndSetValue(self, value:str) -> None:
+        if value is None:
+            raise NoneType("Error: Has ingresado un valor nulo")
         if not isinstance(value, str):
             raise ValueError("Error: El valor ingresado debe ser un string")
         
-        validChars = ".0123456789abcdefABCDEF"
+        validChars = "-.0123456789abcdefABCDEF"
         
         for char in value:
             if char not in validChars:
-                raise ValueError("Error: El valor ingresado posee caracteres inválidos")
+                raise NumberIsInvalid("Error: El valor ingresado posee caracteres inválidos")
         
             if value.count(".") > 1:
-                raise ValueError("Error: El formato del número con punto decimal es incorrecto")
-            
+                raise NumberIsInvalid("Error: El formato del número con punto decimal es incorrecto")
+     
             self.__value = value
 
     def __str__(self) -> str:
