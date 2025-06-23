@@ -26,7 +26,7 @@ class StudiedNumber:
         
             if value.count(".") > 1:
                 raise NumberIsInvalid("Error: El formato del número con punto decimal es incorrecto")
-            
+     
             self.__value = value
 
     def __str__(self) -> str:

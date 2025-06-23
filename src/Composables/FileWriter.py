@@ -52,4 +52,3 @@ class FileWriter:
             file.write("\n")
             for i in range(len(dataArray)):
                 file.write(f"x{i+1} = {dataArray[i]}\n")
-
