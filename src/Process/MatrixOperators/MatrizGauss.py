@@ -5,6 +5,16 @@ class MatrizGauss:
         self.A = np.array(matriz_A, dtype=float)
         self.b = np.array(vector_b, dtype=float)
         
+    def seleccionar_metodo():
+        print("Métodos disponibles:")
+        print("1. Gauss-Jordan (Eliminación directa)")
+        print("2. Gauss-Seidel (Iterativo)")
+        opcion = input("Seleccione el método (1 o 2): ").strip()
+        while opcion not in ["1", "2"]:
+            print("¡Opción inválida! Intente nuevamente.")
+            opcion = input("Seleccione el método (1 o 2): ").strip()
+        return opcion
+
     def gauss_jordan(self):
         n = len(self.b)
         Ab = np.hstack((self.A, self.b.reshape(-1, 1)))
