@@ -1,6 +1,8 @@
 import os
 import numpy as np
 from pathlib import Path
+from Process.ErrorHandling.Exceptions import *
+from Process.ErrorHandling.ErrorLogger import ErrorLogger
 
 class FileReader:
     
@@ -17,13 +19,13 @@ class FileReader:
             else:
                 raise FileNotFoundError("No se encontraron archivos.")
 
-        except FileNotFoundError as e:
-            print("Manage-Error: Directorio no existe: ", e)
-            return None
+        except FileNotFoundError as error:
+            ErrorLogger.LogError(error)
+            raise FileNotFoundError(f"Error: No se ha encontrado archivos en el directorio {self.__binaryFilesDir}")
 
-        except NotADirectoryError as e:
-            print("Manage-Error: Ocurrió un error inesperado:", e)
-            return None
+        except NotADirectoryError as error:
+            ErrorLogger.LogError(error)
+            raise NotADirectoryError("Error: Ocurrió un error inesperado al leer el archivo")
     
     def getRowCount(self, fileName: str) -> int:
         filePath = self.__binaryFilesDir / fileName

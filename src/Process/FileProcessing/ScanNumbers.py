@@ -1,4 +1,6 @@
 from Process.FileProcessing.FileProcess import FileProcess
+from Process.ErrorHandling.Exceptions import *
+from Process.ErrorHandling.ErrorLogger import ErrorLogger
 from Repositories.StudiedNumbers.StudiedNumber import StudiedNumber
 from Helpers.FileReader import FileReader
 from Composables.FileWriter import FileWriter
@@ -19,7 +21,12 @@ class ScanNumbers(FileProcess):
         dataValidator = DataValidator()
         fileWriter = FileWriter()
         fileReader = FileReader()
-        availableFiles:np.ndarray = fileReader.getFileList()
+        try:
+            availableFiles:np.ndarray = fileReader.getFileList()
+        except (FileNotFoundError, NotADirectoryError) as error:
+            ErrorLogger.LogError(error)
+            print(f"Lo sentimos, ha ocurrido un error que impide realizar la operación: {error}")
+            return
         
         print("Archivos disponibles para escanear\n")
         filePosition = dataValidator.chooseOptionOf(availableFiles, "Ingresa el archivo que quieres escanear: ")
@@ -40,6 +47,9 @@ class ScanNumbers(FileProcess):
             for j in range(len(scannedValues[i])):
                 try:
                     numbers[i][j] = StudiedNumber(scannedValues[i][j].strip())
-                except (ValueError, TypeError, AttributeError) as e:
-                    if (scannedValues[i][j]):
-                        numbers[i][j] = f"\n{scannedValues[i][j]}: Es un valor inválido\n"
+                except NumberIsInvalid:
+                    numbers[i][j] = f"\n{scannedValues[i][j]}: Es un valor inválido\n"
+                except NoneType:
+                    continue
+                except (ValueError, TypeError) as error:
+                    ErrorLogger.LogError(error)

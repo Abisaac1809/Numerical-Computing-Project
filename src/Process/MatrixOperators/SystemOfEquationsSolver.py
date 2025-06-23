@@ -1,4 +1,5 @@
 from Validations.DataValidator import DataValidator
+from Process.ErrorHandling.Exceptions import *
 import numpy as np
 
 class SystemOfEquationsSolver:
@@ -32,7 +33,7 @@ class SystemOfEquationsSolver:
             
             pivot = augmentedMatrix[column, column]
             if pivot == 0:
-                raise ValueError("Error: La matriz es singular y no puede resolverse.")
+                raise SystemDontHaveSolution("Error: La matriz es singular y no puede resolverse.")
             
             augmentedMatrix[column, column:] /= pivot
             
@@ -69,7 +70,7 @@ class SystemOfEquationsSolver:
             pivot = augmentedMatrix[pivotRow][pivotColumn]
             
             if pivot == 0:
-                raise RuntimeError("Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución")
+                raise SystemDontHaveSolution("Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución")
 
             for columna in range(pivotColumn, len(augmentedMatrix[pivotRow])):
                 augmentedMatrix[pivotRow][columna] /= pivot
@@ -108,7 +109,7 @@ class SystemOfEquationsSolver:
             pivot = augmentedMatrix[pivotRow][pivotColumn]
 
             if pivot == 0:
-                raise RuntimeError("Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución")
+                raise SystemDontHaveSolution("Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución")
             
             for column in range(pivotColumn, len(augmentedMatrix[pivotRow])):
                 augmentedMatrix[pivotRow][column] /= pivot
@@ -204,5 +205,4 @@ class SystemOfEquationsSolver:
             if error < tol:
                 return x
         
-        print(f"Gauss-Seidel no convergió después de {maxIter} iteraciones.")
-        return x
+        raise SystemDontHaveSolution(f"Gauss-Seidel no convergió después de {maxIter} iteraciones.")
