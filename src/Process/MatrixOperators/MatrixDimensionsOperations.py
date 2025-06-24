@@ -1,3 +1,4 @@
+from Process.ErrorHandling.Exceptions import *
 class MatrixDimensionsOperations:
 
     def __init__(self):
@@ -8,24 +9,37 @@ class MatrixDimensionsOperations:
         rows2, cols2 = matrix2_dims
 
         if rows1 != rows2 or cols1 != cols2:
-            raise ValueError(f"No se puede realizar la suma: matriz {matrix1_dims} + matriz {matrix2_dims}. "
-                           f"Las dimensiones deben ser iguales.")
-
+            raise ImposibleMatrixOperation(f"""
+        Error: La operación de suma matricial no es posible.
+        Sean A ∈ R^({rows1}x{cols1} ∧ B ∈ R^({rows2}x{cols2})
+        A + B está definida ⟺ dim(A) = dim(B)
+        En este caso, (({rows1}x{cols1}) ≠ ({rows2}x{cols2}))
+        ∴ A + B no está definida
+        """)
         return (rows1, cols1)
 
     def determineDimensionsOfSubstraction(self, matrix1Dims, matrix2Dims):
         rows1, cols1 = matrix1Dims
         rows2, cols2 = matrix2Dims
         if rows1 != rows2 or cols1 != cols2:
-            raise ValueError(f"No se puede realizar la resta: matriz {matrix1Dims} - matriz {matrix2Dims}. "
-                           f"Las dimensiones deben ser iguales.")
+            raise ImposibleMatrixOperation(f"""
+        Error: La operación de resta matricial no es posible.
+        Sean A ∈ R^({rows1}x{cols1} ∧ B ∈ R^({rows2}x{cols2})
+        A - B está definida ⟺ dim(A) = dim(B)
+        En este caso, (({rows1}x{cols1}) ≠ ({rows2}x{cols2}))
+        ∴ A - B no está definida
+        """)
         return (rows1, cols1)
 
     def determineDimensionsOfMultiplication(self, matrix1Dims, matrix2Dims):
         rows1, cols1 = matrix1Dims
         rows2, cols2 = matrix2Dims
         if cols1 != rows2:
-            raise ValueError(f"No se puede realizar la multiplicación: matriz {matrix1Dims} × matriz {matrix2Dims}. "
-                           f"El número de columnas de la primera matriz ({cols1}) debe ser igual "
-                           f"al número de filas de la segunda matriz ({rows2}).")
+            raise ImposibleMatrixOperation(f"""
+        Error: La operación de multiplicación matricial no es posible.
+        Sean A ∈ R^({rows1}x{cols1} ∧ B ∈ R^({rows2}x{cols2})
+        A * B está definida ⟺ columnas(A) = filas(B)
+        En este caso, ({cols1} ≠ {rows2})
+        ∴ A * B no está definida
+        """)
         return (rows1, cols2)
