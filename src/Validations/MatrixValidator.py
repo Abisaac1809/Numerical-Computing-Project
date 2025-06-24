@@ -1,11 +1,11 @@
 import numpy as np
 
 class MatrixValidator:
-    def can_add_or_subtract(self, matrix_a, matrix_b):
+    def canAddOrSubtract(self, matrix_a, matrix_b):
         """Valida si dos matrices pueden ser sumadas o restadas"""
         return matrix_a.shape == matrix_b.shape
     
-    def can_multiply(self, matrix_a, matrix_b):
+    def canMultiply(self, matrix_a, matrix_b):
         """Valida si dos matrices pueden ser multiplicadas"""
         return matrix_a.shape[1] == matrix_b.shape[0]
     
@@ -13,6 +13,6 @@ class MatrixValidator:
         """Valida si una matriz puede ser transpuesta (siempre posible)"""
         return True
     
-    def can_invert(self, matrix):
+    def canInvert(self, matrix):
         """Valida si una matriz puede ser invertida"""
         return matrix.shape[0] == matrix.shape[1] and not np.isclose(np.linalg.det(matrix), 0)
