@@ -1,4 +1,4 @@
-from Process.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.Exceptions import *
 from Repositories.StudiedNumbers.SignificantFigures import SignificantFigures
 from Repositories.StudiedNumbers.NumeralSystem import NumeralSystem
 from Repositories.StudiedNumbers.Bases import Bases
@@ -26,7 +26,7 @@ class StudiedNumber:
         
             if value.count(".") > 1:
                 raise NumberIsInvalid("Error: El formato del número con punto decimal es incorrecto")
-     
+
             self.__value = value
 
     def __str__(self) -> str:

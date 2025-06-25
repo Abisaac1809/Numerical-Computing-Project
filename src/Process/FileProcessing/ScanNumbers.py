@@ -1,6 +1,6 @@
 from Process.FileProcessing.FileProcess import FileProcess
-from Process.ErrorHandling.Exceptions import *
-from Process.ErrorHandling.ErrorLogger import ErrorLogger
+from Helpers.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.ErrorLogger import ErrorLogger
 from Repositories.StudiedNumbers.StudiedNumber import StudiedNumber
 from Helpers.FileReader import FileReader
 from Composables.FileWriter import FileWriter
@@ -9,18 +9,10 @@ import numpy as np
 
 class ScanNumbers(FileProcess):
     def execute(self):
-        scannedValues:np.ndarray[str]
-        numbers:np.ndarray[StudiedNumber]
-        dataValidator:DataValidator
-        fileWriter:FileWriter
-        fileReader:FileReader
-        availableFiles:np.ndarray
-        filePosition:int
-        fileName:str
-        
         dataValidator = DataValidator()
         fileWriter = FileWriter()
         fileReader = FileReader()
+
         try:
             availableFiles:np.ndarray = fileReader.getFileList()
         except (FileNotFoundError, NotADirectoryError) as error:
