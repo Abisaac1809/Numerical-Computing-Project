@@ -3,15 +3,15 @@ from Process.MatrixOperators.MatrixOperations import MatrixOperations
 from Process.MatrixOperators.MatrixDimensionsOperations import MatrixDimensionsOperations
 
 
-class MatrixEquationSolver(AbstractEquationSolver):
+class DimensionsEquationSolver(AbstractEquationSolver):
     def __init__(self):
         self.matrixOperator = MatrixDimensionsOperations()
 
         super().__init__()
         self.operators = {
-            '+': lambda x, y: self.matrixOperator.determineDimensionsOfAddition(x.shape, y.shape),
-            '-': lambda x, y: self.matrixOperator.determineDimensionsOfSubstraction(x.shape, y.shape),
-            '*': lambda x, y: self.matrixOperator.determineDimensionsOfMultiplication(x.shape, y.shape),
+            '+': lambda x, y: self.matrixOperator.determineDimensionsOfAddition(x, y),
+            '-': lambda x, y: self.matrixOperator.determineDimensionsOfSubstraction(x, y),
+            '*': lambda x, y: self.matrixOperator.determineDimensionsOfMultiplication(x, y),
         }
         self.precedences = {
             '+': 1,
@@ -28,3 +28,16 @@ class MatrixEquationSolver(AbstractEquationSolver):
         if operator not in self.precedences:
             raise ValueError(f"Error: Precedencia desconocida para el operador: {operator}")
         return self.precedences[operator]
+    
+    def solve(self, equation: str, variables: dict = None) -> float:
+        
+        if variables is None:
+            variables = {} 
+        
+        for key, value in variables.items():
+            variables[key] = value.shape
+
+        tokens = self._tokenize(equation)
+        postfixNotation = self._shuntingYard(tokens)
+        result = self._evaluatePostfix(postfixNotation, variables) 
+        return result

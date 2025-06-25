@@ -11,7 +11,7 @@ class MatrixDimensionsOperations:
         if rows1 != rows2 or cols1 != cols2:
             raise ImposibleMatrixOperation(f"""
         Error: La operación de suma matricial no es posible.
-        Sean A ∈ R^({rows1}x{cols1} ∧ B ∈ R^({rows2}x{cols2})
+        Sean A ∈ R^({rows1}x{cols1}) ∧ B ∈ R^({rows2}x{cols2})
         A + B está definida ⟺ dim(A) = dim(B)
         En este caso, (({rows1}x{cols1}) ≠ ({rows2}x{cols2}))
         ∴ A + B no está definida
@@ -24,7 +24,7 @@ class MatrixDimensionsOperations:
         if rows1 != rows2 or cols1 != cols2:
             raise ImposibleMatrixOperation(f"""
         Error: La operación de resta matricial no es posible.
-        Sean A ∈ R^({rows1}x{cols1} ∧ B ∈ R^({rows2}x{cols2})
+        Sean A ∈ R^({rows1}x{cols1}) ∧ B ∈ R^({rows2}x{cols2})
         A - B está definida ⟺ dim(A) = dim(B)
         En este caso, (({rows1}x{cols1}) ≠ ({rows2}x{cols2}))
         ∴ A - B no está definida
@@ -37,7 +37,7 @@ class MatrixDimensionsOperations:
         if cols1 != rows2:
             raise ImposibleMatrixOperation(f"""
         Error: La operación de multiplicación matricial no es posible.
-        Sean A ∈ R^({rows1}x{cols1} ∧ B ∈ R^({rows2}x{cols2})
+        Sean A ∈ R^({rows1}x{cols1}) ∧ B ∈ R^({rows2}x{cols2})
         A * B está definida ⟺ columnas(A) = filas(B)
         En este caso, ({cols1} ≠ {rows2})
         ∴ A * B no está definida

@@ -25,7 +25,7 @@ class FileReader:
 
         except NotADirectoryError as error:
             ErrorLogger.LogError(error)
-            raise NotADirectoryError("Error: Ocurrió un error inesperado al leer el archivo")
+            raise NotADirectoryError(f"Error: {self.__binaryFilesDir} no es un directorio")
     
     def getRowCount(self, fileName: str) -> int:
         filePath = self.__binaryFilesDir / fileName

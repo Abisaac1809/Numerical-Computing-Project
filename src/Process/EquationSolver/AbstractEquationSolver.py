@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from Process.MatrixOperators.MatrixOperations import MatrixOperations
+from Process.ErrorHandling.Exceptions import * 
 from Structures.LinkedList import LinkedList
 from Structures.Queue import Queue
 from Structures.Stack import Stack
@@ -75,7 +76,7 @@ class AbstractEquationSolver(ABC):
                 if i < len(expression) and expression[i] in self.openBrackets:
                     tokens.addLast('*')
             else:
-                raise ValueError(f"Caracter desconocido o inesperado en la expresión: '{char}' en la posición {i}")
+                raise InvalidOperators(f"Caracter desconocido o inesperado en la expresión: '{char}' en la posición {i}")
         return tokens
 
     def _shuntingYard(self, tokens: LinkedList) -> Queue:
@@ -102,13 +103,13 @@ class AbstractEquationSolver(ABC):
                         break
 
                 if not openedBracket: 
-                    raise ValueError(f"Paréntesis de cierre no reconocido: {token}")
+                    raise InvalidBrackets(f"Paréntesis de cierre no reconocido: {token}")
 
                 while operatorStack.getSize() > 0 and operatorStack.showStack() != openedBracket:
                     outputQueue.enqueue(operatorStack.pop())
                     
                 if operatorStack.getSize() == 0 or operatorStack.showStack() != openedBracket:
-                    raise ValueError("Paréntesis, corchetes o llaves no balanceados.")
+                    raise InvalidBrackets("Paréntesis, corchetes o llaves no balanceados.")
                 
                 operatorStack.pop() 
             
@@ -121,7 +122,7 @@ class AbstractEquationSolver(ABC):
                 operatorStack.push(token)
 
             else:
-                raise ValueError(f"Error: Token no reconocido: {token}")
+                raise InvalidOperators(f"Error: Token no reconocido: {token}")
 
         while operatorStack.getSize() > 0:
             if operatorStack.showStack() in self.openBrackets:
@@ -144,12 +145,12 @@ class AbstractEquationSolver(ABC):
             
             elif self._isVariable(token): 
                 if token not in variables:
-                    raise ValueError(f"Error: Variable '{token}' no definida en el diccionario.")
+                    raise VariableNotExist(f"Error: Variable '{token}' no definida en el diccionario.")
                 operandStack.push(variables[token])
             
             elif self._isOperator(token):
                 if operandStack.getSize() < 2:
-                    raise ValueError("Error: Expresión postfija inválida: pocos operandos para el operador " + token)
+                    raise InvalidEquation("Error: Expresión postfija inválida: pocos operandos para el operador " + token)
                 
                 operand2 = operandStack.pop()
                 operand1 = operandStack.pop()
@@ -157,7 +158,7 @@ class AbstractEquationSolver(ABC):
                 operandStack.push(result)
         
         if operandStack.getSize() != 1:
-            raise ValueError("Error: Expresión postfija inválida. Demasiados operandos o operadores.")
+            raise InvalidEquation("Error: Expresión postfija inválida. Demasiados operandos o operadores.")
         
         return operandStack.pop()
 

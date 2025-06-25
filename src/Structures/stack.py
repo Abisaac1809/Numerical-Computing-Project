@@ -19,12 +19,12 @@ class Stack:
         self.size -= 1
         return data
     
-    def show_stack(self):
+    def showStack(self):
         if self.isEmpty():
             raise ValueError("- StackError: la pila esta vacia")
         return self.stack.getData()
     
-    def get_size(self):
+    def getSize(self):
         return self.size
     
     def isEmpty(self):

@@ -9,18 +9,10 @@ import numpy as np
 
 class ScanNumbers(FileProcess):
     def execute(self):
-        scannedValues:np.ndarray[str]
-        numbers:np.ndarray[StudiedNumber]
-        dataValidator:DataValidator
-        fileWriter:FileWriter
-        fileReader:FileReader
-        availableFiles:np.ndarray
-        filePosition:int
-        fileName:str
-        
         dataValidator = DataValidator()
         fileWriter = FileWriter()
         fileReader = FileReader()
+        
         try:
             availableFiles:np.ndarray = fileReader.getFileList()
         except (FileNotFoundError, NotADirectoryError) as error:
