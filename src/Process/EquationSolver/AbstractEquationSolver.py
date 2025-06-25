@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from Process.MatrixOperators.MatrixOperations import MatrixOperations
-from Process.ErrorHandling.Exceptions import * 
+from Helpers.ErrorHandling.Exceptions import * 
 from Structures.LinkedList import LinkedList
-from Structures.Queue import Queue
-from Structures.Stack import Stack
+from Structures.queue import Queue
+from Structures.stack import Stack
 import numpy as np
 
 class AbstractEquationSolver(ABC):

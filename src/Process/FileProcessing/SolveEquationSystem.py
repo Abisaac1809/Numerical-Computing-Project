@@ -1,8 +1,8 @@
 from Process.FileProcessing.FileProcess import FileProcess
 from Process.MatrixOperators.SystemOfEquationsSolver import SystemOfEquationsSolver
-from Process.Conversions.Conversor import Conversor
-from Process.ErrorHandling.ErrorLogger import ErrorLogger
-from Process.ErrorHandling.Exceptions import *
+from Helpers.Conversions.Conversor import Conversor
+from Helpers.ErrorHandling.ErrorLogger import ErrorLogger
+from Helpers.ErrorHandling.Exceptions import *
 from Helpers.FileReader import FileReader
 from Composables.FileWriter import FileWriter
 from Validations.DataValidator import DataValidator
@@ -27,7 +27,7 @@ class SolveEquationSystem(FileProcess):
         fileName = availableFiles[filePosition]
         readedFileSerial = fileName.split("_")[2].split(".")[0]
         augmentedMatrix = fileReader.readBinaryFile(fileName)
-        augmentedMatrix = self.__convertToFloat(augmentedMatrix)
+        augmentedMatrix = Conversor.convertEveryValueToFloat(augmentedMatrix)
         coefficients = augmentedMatrix[:, :len(augmentedMatrix)]
         independents = augmentedMatrix[:,-1]
         

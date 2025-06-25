@@ -1,4 +1,4 @@
-from Process.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.Exceptions import *
 class MatrixDimensionsOperations:
 
     def __init__(self):

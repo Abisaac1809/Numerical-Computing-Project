@@ -1,4 +1,4 @@
-from Process.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.Exceptions import *
 from Repositories.StudiedNumbers.SignificantFigures import SignificantFigures
 from Repositories.StudiedNumbers.NumeralSystem import NumeralSystem
 from Repositories.StudiedNumbers.Bases import Bases

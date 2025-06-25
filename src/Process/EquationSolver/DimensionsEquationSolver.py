@@ -33,11 +33,11 @@ class DimensionsEquationSolver(AbstractEquationSolver):
         
         if variables is None:
             variables = {} 
-        
+        vars = {}
         for key, value in variables.items():
-            variables[key] = value.shape
+            vars[key] = value.shape
 
         tokens = self._tokenize(equation)
         postfixNotation = self._shuntingYard(tokens)
-        result = self._evaluatePostfix(postfixNotation, variables) 
+        result = self._evaluatePostfix(postfixNotation, vars) 
         return result

@@ -1,8 +1,8 @@
 import os
 import numpy as np
 from pathlib import Path
-from Process.ErrorHandling.Exceptions import *
-from Process.ErrorHandling.ErrorLogger import ErrorLogger
+from Helpers.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.ErrorLogger import ErrorLogger
 
 class FileReader:
     

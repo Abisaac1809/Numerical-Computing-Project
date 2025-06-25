@@ -2,9 +2,9 @@ from Helpers.FileReader import FileReader
 from Composables.FileWriter import FileWriter
 from Process.EquationSolver.BasicEquationSolver import BasicEquationSolver
 from Process.FileProcessing.FileProcess import FileProcess
-from Process.Conversions.Conversor import Conversor
-from Process.ErrorHandling.Exceptions import *
-from Process.ErrorHandling.ErrorLogger import ErrorLogger
+from Helpers.Conversions.Conversor import Conversor
+from Helpers.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.ErrorLogger import ErrorLogger
 from Validations.DataValidator import DataValidator
 from Structures.LinkedList import LinkedList
 import numpy as np

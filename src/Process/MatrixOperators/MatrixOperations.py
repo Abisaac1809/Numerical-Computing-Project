@@ -1,6 +1,6 @@
 import numpy as np
 from Validations.MatrixValidator import MatrixValidator
-from Process.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.Exceptions import *
 
 class MatrixOperations:
     def __init__(self):
