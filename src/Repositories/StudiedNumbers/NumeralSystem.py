@@ -26,6 +26,7 @@ class NumeralSystem:
 
     def __isDecimal(self, value:str) -> bool:
         validChars = "-.0123456789"
+
         for char in value:
             if char not in validChars:
                 return False
@@ -33,6 +34,7 @@ class NumeralSystem:
 
     def __isHexadecimal(self, value:str) -> bool:
         validChars = "-.0123456789abcdefABCDEF"
+
         for char in value:
             if char not in validChars:
                 return False

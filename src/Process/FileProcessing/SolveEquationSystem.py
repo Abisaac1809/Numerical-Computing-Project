@@ -38,7 +38,6 @@ class SolveEquationSystem(FileProcess):
             return
 
         fileWriter.writeSystemOfEquationResult(result, readedFileSerial)
-
     
     def __solveSystemOfEquation(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
         try:
