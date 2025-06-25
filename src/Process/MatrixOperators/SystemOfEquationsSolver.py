@@ -1,5 +1,5 @@
 from Validations.DataValidator import DataValidator
-from Process.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.Exceptions import *
 import numpy as np
 
 class SystemOfEquationsSolver:

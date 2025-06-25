@@ -6,16 +6,19 @@ Este repositorio contiene el código desarrollado para el proyecto de la materia
 
 ### Funcionalidades Actuales
 
-1. **Determinación de Cifras Significativas:**
-
-   * Cálculo del número de cifras significativas de un valor.
-2. **Sistemas Numéricos y Operaciones Elementales:**
-
-   * Representación y operaciones en sistemas decimal, hexadecimal y binario.
-3. **Cálculo de Errores:**
-
-   * **Errores Absolutos y Relativos.**
-   * **Errores por Truncamiento y Propagación.**
+1.  **Determinación de Cifras Significativas:**
+    * Cálculo del número de cifras significativas de un valor.
+2.  **Sistemas Numéricos y Operaciones Elementales:**
+    * Representación y operaciones en sistemas decimal, hexadecimal y binario.
+3.  **Cálculo de Errores:**
+    * **Errores Absolutos y Relativos.**
+    * **Errores por Truncamiento y Propagación.**
+4.  **Resolución de Sistemas de Ecuaciones Lineales:**
+    * **Método de Gauss-Jordan:** Incluye pivoteo parcial, escalonado y completo para mayor precisión y estabilidad numérica.
+    * **Método de Gauss-Seidel:** Para la resolución iterativa de sistemas de ecuaciones.
+5.  **Resolución de Ecuaciones con Variables (Numéricas y Matriciales):**
+    * **Ecuaciones con variables numéricas:** Resolución de ecuaciones donde las incógnitas son números.
+    * **Ecuaciones con variables matriciales:** Resolución de ecuaciones donde las incógnitas son matrices.
 
 ### Tecnologías Utilizadas
 
