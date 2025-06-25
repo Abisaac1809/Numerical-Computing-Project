@@ -39,25 +39,6 @@ class SolveEquationSystem(FileProcess):
 
         fileWriter.writeSystemOfEquationResult(result, readedFileSerial)
 
-    def __convertToFloat(self, matrix:np.ndarray) -> np.ndarray:
-        conversor = Conversor()
-        
-        for i in range(len(matrix)):
-            for j in range(len(matrix[i])):
-                if self.__isHexadecimal(matrix[i][j]):
-                    try:
-                        matrix[i][j] = conversor.convertToDecimal(matrix[i][j], 16)
-                    except ValueError as error:
-                        ErrorLogger.LogError(error)
-                matrix[i][j] = float(matrix[i][j])
-        return matrix
-
-    def __isHexadecimal(self, value:str) -> bool:
-        letters = "abcdefABCDEF"
-        for char in value:
-            if char in letters:
-                return True
-        return False
     
     def __solveSystemOfEquation(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
         try:
