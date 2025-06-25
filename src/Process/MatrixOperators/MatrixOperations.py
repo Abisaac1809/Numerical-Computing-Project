@@ -1,45 +1,45 @@
 import numpy as np
 from Validations.MatrixValidator import MatrixValidator
-from Process.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.Exceptions import *
 
 class MatrixOperations:
     def __init__(self):
         self.validator = MatrixValidator()
     
-    def add(self, matrix_a, matrix_b):
-        if not self.validator.can_add_or_subtract(matrix_a, matrix_b):
+    def add(self, matrixA, matrixB):
+        if not self.validator.canAddOrSubtract(matrixA, matrixB):
             raise ValueError("Las matrices no tienen las mismas dimensiones")
         
-        result = np.zeros((matrix_a.shape[0], matrix_a.shape[1]))
-        for i in range(matrix_a.shape[0]):
-            for j in range(matrix_a.shape[1]):
-                result[i, j] = matrix_a[i, j] + matrix_b[i, j]
+        result = np.zeros((matrixA.shape[0], matrixA.shape[1]))
+        for i in range(matrixA.shape[0]):
+            for j in range(matrixA.shape[1]):
+                result[i, j] = matrixA[i, j] + matrixB[i, j]
         return result
     
-    def subtract(self, matrix_a, matrix_b):
-        if not self.validator.can_add_or_subtract(matrix_a, matrix_b):
+    def subtract(self, matrixA, matrixB):
+        if not self.validator.canAddOrSubtract(matrixA, matrixB):
             raise ValueError("Las matrices no tienen las mismas dimensiones")
         
-        result = np.zeros((matrix_a.shape[0], matrix_a.shape[1]))
-        for i in range(matrix_a.shape[0]):
-            for j in range(matrix_a.shape[1]):
-                result[i, j] = matrix_a[i, j] - matrix_b[i, j]
+        result = np.zeros((matrixA.shape[0], matrixA.shape[1]))
+        for i in range(matrixA.shape[0]):
+            for j in range(matrixA.shape[1]):
+                result[i, j] = matrixA[i, j] - matrixB[i, j]
         return result
     
-    def multiply(self, matrix_a, matrix_b):
-        if not self.validator.can_multiply(matrix_a, matrix_b):
+    def multiply(self, matrixA, matrixB):
+        if not self.validator.canMultiply(matrixA, matrixB):
             raise ValueError("Número de columnas de A debe coincidir con filas de B")
         
-        result = np.zeros((matrix_a.shape[0], matrix_b.shape[1]))
-        for i in range(matrix_a.shape[0]):
-            for j in range(matrix_b.shape[1]):
+        result = np.zeros((matrixA.shape[0], matrixB.shape[1]))
+        for i in range(matrixA.shape[0]):
+            for j in range(matrixB.shape[1]):
                 sum_val = 0
-                for k in range(matrix_a.shape[1]):
-                    sum_val += matrix_a[i, k] * matrix_b[k, j]
+                for k in range(matrixA.shape[1]):
+                    sum_val += matrixA[i, k] * matrixB[k, j]
                 result[i, j] = sum_val
         return result
     
-    def scalar_multiply(self, matrix, scalar):
+    def scalarMultiply(self, matrix, scalar):
         result = np.zeros((matrix.shape[0], matrix.shape[1]))
         for i in range(matrix.shape[0]):
             for j in range(matrix.shape[1]):
@@ -54,7 +54,7 @@ class MatrixOperations:
         return result
 
     def inverse(self, matrix):
-        if not self.validator.can_invert(matrix):
+        if not self.validator.canInvert(matrix):
             raise ValueError("Matriz no es cuadrada o es singular")
         
         n = matrix.shape[0]
@@ -62,19 +62,15 @@ class MatrixOperations:
         
         if n == 1:
             return np.array([[1 / matrix[0, 0]]])
-        
-        # Matriz de cofactores
         cofactors = np.zeros((n, n))
         for i in range(n):
             for j in range(n):
                 minor = np.delete(np.delete(matrix, i, axis=0), j, axis=1)
                 cofactor = (-1) ** (i + j) * self.validator._determinant(minor)
                 cofactors[i, j] = cofactor
-        
-        # Adjunta (transpuesta de cofactores)
+
         adjugate = self.transpose(cofactors)
-        
-        # Inversa (adjunta/determinante)
+
         inverse = np.zeros((n, n))
         for i in range(n):
             for j in range(n):

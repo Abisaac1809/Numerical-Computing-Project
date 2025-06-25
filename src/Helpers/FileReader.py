@@ -1,8 +1,8 @@
 import os
 import numpy as np
 from pathlib import Path
-from Process.ErrorHandling.Exceptions import *
-from Process.ErrorHandling.ErrorLogger import ErrorLogger
+from Helpers.ErrorHandling.Exceptions import *
+from Helpers.ErrorHandling.ErrorLogger import ErrorLogger
 
 class FileReader:
     
@@ -25,7 +25,7 @@ class FileReader:
 
         except NotADirectoryError as error:
             ErrorLogger.LogError(error)
-            raise NotADirectoryError("Error: Ocurrió un error inesperado al leer el archivo")
+            raise NotADirectoryError(f"Error: {self.__binaryFilesDir} no es un directorio")
     
     def getRowCount(self, fileName: str) -> int:
         filePath = self.__binaryFilesDir / fileName
@@ -76,7 +76,7 @@ class FileReader:
                     if (len(content[j]) == 0):
                         continue
                     result_array[i][j] = content[j].strip()
- 
+
                 i += 1
                 line = file.readline().decode("utf-8")
 
