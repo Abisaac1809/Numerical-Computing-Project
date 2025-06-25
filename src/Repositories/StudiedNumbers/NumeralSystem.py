@@ -55,7 +55,7 @@ class NumeralSystem:
     def __validateInput(self, value:str) -> None:
         if not isinstance(value, str):
             raise ValueError("Error: El valor ingresado debe ser un string")
-        
+
         validChars = "-.0123456789abcdefABCDEF"
 
         for char in value:
