@@ -5,7 +5,6 @@ from Process.FileProcessing.SolveEquationSystem import SolveEquationSystem
 from Process.FileProcessing.SolveEquations import SolveEquations
 from Process.FileProcessing.SolveMatrixEquations import SolveMatrixEquations
 
-
 class FileProcessFactory:
     __processes:dict = {
         "Escanear archivo de números" : ScanNumbers,

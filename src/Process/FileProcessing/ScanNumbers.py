@@ -12,7 +12,7 @@ class ScanNumbers(FileProcess):
         dataValidator = DataValidator()
         fileWriter = FileWriter()
         fileReader = FileReader()
-        
+
         try:
             availableFiles:np.ndarray = fileReader.getFileList()
         except (FileNotFoundError, NotADirectoryError) as error:
