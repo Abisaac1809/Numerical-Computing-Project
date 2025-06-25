@@ -62,7 +62,6 @@ class MatrixOperations:
         
         if n == 1:
             return np.array([[1 / matrix[0, 0]]])
-
         cofactors = np.zeros((n, n))
         for i in range(n):
             for j in range(n):

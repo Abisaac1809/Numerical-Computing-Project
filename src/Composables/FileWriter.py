@@ -98,3 +98,4 @@ class FileWriter:
             file.write(f"Ecuacion: {equation}\n")
             file.write(errorMessage)
     
+
