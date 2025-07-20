@@ -1,20 +1,21 @@
 from Process.EquationSolver.AbstractEquationSolver import AbstractEquationSolver
 from Process.MatrixOperators.MatrixOperations import MatrixOperations
 
+
 class MatrixEquationSolver(AbstractEquationSolver):
     def __init__(self):
-        self. matrixOperator = MatrixOperations()
+        self.matrixOperator = MatrixOperations()
 
         super().__init__()
         self.operators = {
-            '+': lambda x, y: self.matrixOperator.add(x, y),
-            '-': lambda x, y: self.matrixOperator.subtract(x, y),
-            '*': lambda x, y: self.matrixOperator.multiply(x, y),
+            "+": lambda x, y: self.matrixOperator.add(x, y),
+            "-": lambda x, y: self.matrixOperator.subtract(x, y),
+            "*": lambda x, y: self.matrixOperator.multiply(x, y),
         }
         self.precedences = {
-            '+': 1,
-            '-': 1,
-            '*': 2,
+            "+": 1,
+            "-": 1,
+            "*": 2,
         }
 
     def _evaluateOperator(self, operator, operand1, operand2):
@@ -24,5 +25,7 @@ class MatrixEquationSolver(AbstractEquationSolver):
 
     def _getOperatorPrecedence(self, operator):
         if operator not in self.precedences:
-            raise ValueError(f"Error: Precedencia desconocida para el operador: {operator}")
+            raise ValueError(
+                f"Error: Precedencia desconocida para el operador: {operator}"
+            )
         return self.precedences[operator]

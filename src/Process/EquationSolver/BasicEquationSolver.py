@@ -1,22 +1,17 @@
-from Process.EquationSolver.AbstractEquationSolver import AbstractEquationSolver    
+from Process.EquationSolver.AbstractEquationSolver import AbstractEquationSolver
+
 
 class BasicEquationSolver(AbstractEquationSolver):
     def __init__(self):
         super().__init__()
         self.operators = {
-            '+': lambda x, y: x + y,
-            '-': lambda x, y: x - y,
-            '*': lambda x, y: x * y,
-            '/': lambda x, y: x / y,
-            '^': lambda x, y: x ** y 
+            "+": lambda x, y: x + y,
+            "-": lambda x, y: x - y,
+            "*": lambda x, y: x * y,
+            "/": lambda x, y: x / y,
+            "^": lambda x, y: x**y,
         }
-        self.precedences = {
-            '+': 1,
-            '-': 1,
-            '*': 2,
-            '/': 2,
-            '**': 3 
-        }
+        self.precedences = {"+": 1, "-": 1, "*": 2, "/": 2, "**": 3}
 
     def _evaluateOperator(self, operator, operand1, operand2):
         if operator not in self.operators:
@@ -25,5 +20,7 @@ class BasicEquationSolver(AbstractEquationSolver):
 
     def _getOperatorPrecedence(self, operator):
         if operator not in self.precedences:
-            raise ValueError(f"Error: Precedencia desconocida para el operador: {operator}")
+            raise ValueError(
+                f"Error: Precedencia desconocida para el operador: {operator}"
+            )
         return self.precedences[operator]

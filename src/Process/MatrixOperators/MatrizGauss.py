@@ -1,142 +1,192 @@
 from Validations.DataValidator import DataValidator
 import numpy as np
 
+
 class MatrizGauss:
     def __init__(self):
         self.methodsToSolveSystem = {
-            "Gauss-Jordan con pivoteo parcial" : self.gaussJordanPartialPivoting,
-            "Gauss-Jordan con pivoteo escalonado" : self.gaussJordanStaggeredPivoting,
-            "Gauss-Jordan con pivoteo completo" : self.gaussJordanFullPivoting,
-            "Gauss-Seidel" : self.gaussSeidel
+            "Gauss-Jordan con pivoteo parcial": self.gaussJordanPartialPivoting,
+            "Gauss-Jordan con pivoteo escalonado": self.gaussJordanStaggeredPivoting,
+            "Gauss-Jordan con pivoteo completo": self.gaussJordanFullPivoting,
+            "Gauss-Seidel": self.gaussSeidel,
         }
-    
-    def solveSystemOfEquation(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
+
+    def solveSystemOfEquation(
+        self, coefficients: np.ndarray, independents: np.ndarray
+    ) -> np.ndarray:
         dataValidator = DataValidator()
         availableMethods = np.array(list(self.methodsToSolveSystem.keys()))
-        
+
         print("Métodos de resolución de sistemas disponibles:")
-        option = dataValidator.chooseOptionOf(availableMethods, "Ingresa el método que quieres realizar: ")
-        result = self.methodsToSolveSystem.get(availableMethods[option])(coefficients, independents)
+        option = dataValidator.chooseOptionOf(
+            availableMethods, "Ingresa el método que quieres realizar: "
+        )
+        result = self.methodsToSolveSystem.get(availableMethods[option])(
+            coefficients, independents
+        )
         return result
 
-    def gaussJordanPartialPivoting(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
+    def gaussJordanPartialPivoting(
+        self, coefficients: np.ndarray, independents: np.ndarray
+    ) -> np.ndarray:
         coefficientsColumns = len(coefficients)
         augmentedMatrix = self.concatenateMatrixAndVector(coefficients, independents)
-        
+
         for column in range(coefficientsColumns):
             maxRow = column
             for k in range(column + 1, coefficientsColumns):
-                if abs(augmentedMatrix[k, column]) > abs(augmentedMatrix[maxRow, column]):
+                if abs(augmentedMatrix[k, column]) > abs(
+                    augmentedMatrix[maxRow, column]
+                ):
                     maxRow = k
             augmentedMatrix[[column, maxRow]] = augmentedMatrix[[maxRow, column]]
-            
+
             pivot = augmentedMatrix[column, column]
             if pivot == 0:
                 raise ValueError("La matriz es singular y no puede resolverse.")
-            
+
             augmentedMatrix[column, column:] /= pivot
-            
+
             for k in range(coefficientsColumns):
                 if k != column:
                     factor = augmentedMatrix[k, column]
-                    augmentedMatrix[k, column:] -= factor * augmentedMatrix[column, column:]
-        
+                    augmentedMatrix[k, column:] -= (
+                        factor * augmentedMatrix[column, column:]
+                    )
+
         return augmentedMatrix[:, -1]
 
-    def gaussJordanStaggeredPivoting(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
-        if not isinstance(coefficients, np.ndarray) or not isinstance(independents, np.ndarray):
+    def gaussJordanStaggeredPivoting(
+        self, coefficients: np.ndarray, independents: np.ndarray
+    ) -> np.ndarray:
+        if not isinstance(coefficients, np.ndarray) or not isinstance(
+            independents, np.ndarray
+        ):
             raise ValueError("Error: Has ingresado una matriz inválida")
-        
+
         coefficientsColumns = len(coefficients[0])
         augmentedMatrix = self.concatenateMatrixAndVector(coefficients, independents)
         scalingFactors = self.searchScalingFactorsIn(coefficients)
-        
+
         for pivotColumn in range(coefficientsColumns):
             pivotRow = pivotColumn
             maxRatioRow = pivotRow
-            maxRatio = abs(augmentedMatrix[maxRatioRow][pivotColumn]) / scalingFactors[maxRatioRow]
+            maxRatio = (
+                abs(augmentedMatrix[maxRatioRow][pivotColumn])
+                / scalingFactors[maxRatioRow]
+            )
 
             for indexRow in range(pivotRow + 1, len(augmentedMatrix)):
-                ratio = abs(augmentedMatrix[indexRow][pivotColumn]) / scalingFactors[indexRow]
+                ratio = (
+                    abs(augmentedMatrix[indexRow][pivotColumn])
+                    / scalingFactors[indexRow]
+                )
                 if ratio > maxRatio:
                     maxRatio = ratio
                     maxRatioRow = indexRow
-            
+
             if maxRatioRow != pivotRow:
-                augmentedMatrix[[pivotRow, maxRatioRow]] = augmentedMatrix[[maxRatioRow, pivotRow]]
-                scalingFactors[[pivotRow, maxRatioRow]] = scalingFactors[[maxRatioRow, pivotRow]]
-            
+                augmentedMatrix[[pivotRow, maxRatioRow]] = augmentedMatrix[
+                    [maxRatioRow, pivotRow]
+                ]
+                scalingFactors[[pivotRow, maxRatioRow]] = scalingFactors[
+                    [maxRatioRow, pivotRow]
+                ]
+
             pivot = augmentedMatrix[pivotRow][pivotColumn]
-            
+
             if pivot == 0:
-                raise RuntimeError("Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución")
+                raise RuntimeError(
+                    "Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución"
+                )
 
             for columna in range(pivotColumn, len(augmentedMatrix[pivotRow])):
                 augmentedMatrix[pivotRow][columna] /= pivot
-            
-            
+
             for indexRow in range(len(augmentedMatrix)):
                 if indexRow != pivotRow and augmentedMatrix[indexRow][pivotColumn] != 0:
                     valueToEliminate = augmentedMatrix[indexRow][pivotColumn]
-                    
+
                     for columna in range(pivotColumn, len(augmentedMatrix[pivotRow])):
-                        augmentedMatrix[indexRow][columna] -= valueToEliminate * augmentedMatrix[pivotRow][columna]
-                    
+                        augmentedMatrix[indexRow][columna] -= (
+                            valueToEliminate * augmentedMatrix[pivotRow][columna]
+                        )
+
         return augmentedMatrix
 
-    def gaussJordanFullPivoting(self, coefficients:np.ndarray, independents:np.ndarray) -> np.ndarray:
-        if not isinstance(coefficients, np.ndarray) or not isinstance(independents, np.ndarray):
+    def gaussJordanFullPivoting(
+        self, coefficients: np.ndarray, independents: np.ndarray
+    ) -> np.ndarray:
+        if not isinstance(coefficients, np.ndarray) or not isinstance(
+            independents, np.ndarray
+        ):
             raise ValueError("Error: Has ingresado una matriz inválida")
-            
+
         coefficientsColumns = len(coefficients[0])
         augmentedMatrix = self.concatenateMatrixAndVector(coefficients, independents)
-        positions = np.array([i for i in range(1, coefficientsColumns+1)], dtype=np.int8)
-        
+        positions = np.array(
+            [i for i in range(1, coefficientsColumns + 1)], dtype=np.int8
+        )
+
         for pivotColumn in range(coefficientsColumns):
             pivotRow = pivotColumn
-            maxValuePosition = self.getMaxValuePosition(coefficients[pivotRow:,pivotColumn:])
+            maxValuePosition = self.getMaxValuePosition(
+                coefficients[pivotRow:, pivotColumn:]
+            )
             maxValuePosition[0] += pivotRow
             maxValuePosition[1] += pivotColumn
 
             if maxValuePosition[0] != pivotRow:
-                augmentedMatrix[[pivotRow, maxValuePosition[0]]] = augmentedMatrix[[maxValuePosition[0], pivotRow]]
-            
+                augmentedMatrix[[pivotRow, maxValuePosition[0]]] = augmentedMatrix[
+                    [maxValuePosition[0], pivotRow]
+                ]
+
             if maxValuePosition[1] != pivotColumn:
-                augmentedMatrix[:,[pivotColumn, maxValuePosition[1]]] = augmentedMatrix[:,[maxValuePosition[1], pivotColumn]]
-                positions[[pivotColumn, maxValuePosition[1]]] = positions[[maxValuePosition[1], pivotColumn]]
+                augmentedMatrix[:, [pivotColumn, maxValuePosition[1]]] = (
+                    augmentedMatrix[:, [maxValuePosition[1], pivotColumn]]
+                )
+                positions[[pivotColumn, maxValuePosition[1]]] = positions[
+                    [maxValuePosition[1], pivotColumn]
+                ]
 
             pivot = augmentedMatrix[pivotRow][pivotColumn]
 
             if pivot == 0:
-                raise RuntimeError("Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución")
-            
+                raise RuntimeError(
+                    "Error: El sistema de ecuaciones tiene soluciones infinitas o no tiene solución"
+                )
+
             for column in range(pivotColumn, len(augmentedMatrix[pivotRow])):
                 augmentedMatrix[pivotRow][column] /= pivot
-            
+
             for row in range(len(augmentedMatrix)):
                 if row != pivotRow and augmentedMatrix[row][pivotColumn] != 0:
                     valueToEliminate = augmentedMatrix[row][pivotColumn]
-                    
+
                     for column in range(pivotColumn, len(augmentedMatrix[pivotRow])):
-                        augmentedMatrix[row][column] -= valueToEliminate * augmentedMatrix[pivotRow][column]
-        
-        return self.sortResultByPosition(augmentedMatrix[:,-1], positions)
-        
-    def concatenateMatrixAndVector(matrix:np.ndarray, vector:np.ndarray) -> np.ndarray:
+                        augmentedMatrix[row][column] -= (
+                            valueToEliminate * augmentedMatrix[pivotRow][column]
+                        )
+
+        return self.sortResultByPosition(augmentedMatrix[:, -1], positions)
+
+    def concatenateMatrixAndVector(
+        matrix: np.ndarray, vector: np.ndarray
+    ) -> np.ndarray:
         if not isinstance(matrix, np.ndarray) or not isinstance(vector, np.ndarray):
             raise ValueError("Error: Has ingresado una matriz inválida")
 
         concatenatedMatrix = np.zeros((len(matrix), len(matrix) + 1), dtype=np.float64)
         for i in range(len(matrix)):
-            concatenatedMatrix[i][:len(matrix[i])] = matrix[i]
+            concatenatedMatrix[i][: len(matrix[i])] = matrix[i]
             concatenatedMatrix[i][-1] = vector[i]
-            
+
         return concatenatedMatrix
 
-    def searchScalingFactorsIn(matrix:np.ndarray) -> np.ndarray:
+    def searchScalingFactorsIn(matrix: np.ndarray) -> np.ndarray:
         if not isinstance(matrix, np.ndarray):
             raise ValueError("Error: Has ingresado una matriz inválida")
-        
+
         scalingFactors = np.zeros(len(matrix), dtype=np.float64)
         for i in range(len(matrix)):
             maxValueColumn = 0
@@ -147,23 +197,25 @@ class MatrizGauss:
             scalingFactors[i] = abs(matrix[i][maxValueColumn])
 
         return scalingFactors
-        
-    def getMaxValuePosition(matrix:np.ndarray) -> np.ndarray:
+
+    def getMaxValuePosition(matrix: np.ndarray) -> np.ndarray:
         if not isinstance(matrix, np.ndarray):
             raise ValueError("Error: Has ingresado una matriz inválida")
 
         maxValue = abs(matrix[0][0])
-        maxValuePosition = np.array([0,0], dtype=np.int8)
+        maxValuePosition = np.array([0, 0], dtype=np.int8)
 
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
                 if matrix[i][j] > abs(maxValue):
                     maxValue = matrix[i][j]
                     maxValuePosition[0], maxValuePosition[1] = i, j
-        
+
         return maxValuePosition
 
-    def sortResultByPosition(resultVector: np.ndarray, positionVector: np.ndarray) -> np.ndarray:
+    def sortResultByPosition(
+        resultVector: np.ndarray, positionVector: np.ndarray
+    ) -> np.ndarray:
         if len(resultVector) != len(positionVector):
             raise ValueError("Error: Los vectores deben tener la misma longitud")
 
@@ -178,31 +230,31 @@ class MatrizGauss:
             if 0 <= targetIndex < n:
                 orderedVector[targetIndex] = currentResult
         return orderedVector
-    
+
     def gaussSeidel(self, tol=1e-6, max_iter=1000):
         n = len(self.b)
         x = np.zeros(n)
-        
+
         for _ in range(max_iter):
             x_prev = x.copy()
             for i in range(n):
                 sum1 = 0.0
                 for j in range(i):
                     sum1 += self.A[i, j] * x[j]
-                
+
                 sum2 = 0.0
                 for j in range(i + 1, n):
                     sum2 += self.A[i, j] * x_prev[j]
-                
+
                 x[i] = (self.b[i] - sum1 - sum2) / self.A[i, i]
-            
+
             error = 0.0
             for i in range(n):
                 error += (x[i] - x_prev[i]) ** 2
-            error = error ** 0.5
-            
+            error = error**0.5
+
             if error < tol:
                 return x
-        
+
         print(f"Gauss-Seidel no convergió después de {max_iter} iteraciones.")
         return x

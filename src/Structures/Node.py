@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+
 class Node:
-    def __init__(self, data:any=None):
-        self.__data:any = data
+    def __init__(self, data: any = None):
+        self.__data: any = data
         self.__next = None
         self.__prev = None
 
@@ -18,8 +19,8 @@ class Node:
     def setData(self, data):
         self.__data = data
 
-    def setNext(self, nextNode:Node):
+    def setNext(self, nextNode: Node):
         self.__next = nextNode
 
-    def setPrev(self, prevNode:Node):
+    def setPrev(self, prevNode: Node):
         self.__prev = prevNode

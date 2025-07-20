@@ -1,36 +1,36 @@
 import numpy as np
 
+
 class Conversor:
     @staticmethod
     def convertToDecimal(number: str, base: int) -> float:
         digits = "0123456789ABCDEF"
         number = number.upper()
 
-        if '.' in number:
-            integerPart, fractionPart = number.split('.')
+        if "." in number:
+            integerPart, fractionPart = number.split(".")
         else:
-            integerPart, fractionPart = number, ''
+            integerPart, fractionPart = number, ""
 
         decimal = 0
         for i, char in enumerate(integerPart[::-1]):
             if char not in digits[:base]:
                 raise ValueError(f"Dígito inválido: {char} para base {base}")
-            decimal += digits.index(char) * (base ** i)
-
+            decimal += digits.index(char) * (base**i)
 
         for i, char in enumerate(fractionPart, start=1):
             if char not in digits[:base]:
                 raise ValueError(f"Dígito inválido: {char} para base {base}")
-            decimal += digits.index(char) * (base ** -i)
+            decimal += digits.index(char) * (base**-i)
 
         if number[0] == "-":
             return -decimal
-        
+
         return decimal
 
     @staticmethod
-    def convertEveryValueToFloat(matrix:np.ndarray) -> np.ndarray:
-        
+    def convertEveryValueToFloat(matrix: np.ndarray) -> np.ndarray:
+
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
                 if Conversor.isHexadecimal(matrix[i][j]):
@@ -45,10 +45,10 @@ class Conversor:
                     matrix[i][j] = float(matrix[i][j])
                 else:
                     matrix[i][j] = 0.0
-        return matrix   
+        return matrix
 
     @staticmethod
-    def isHexadecimal(value:str) -> bool:
+    def isHexadecimal(value: str) -> bool:
         if value:
             letters = "abcdefABCDEF"
             for char in value:

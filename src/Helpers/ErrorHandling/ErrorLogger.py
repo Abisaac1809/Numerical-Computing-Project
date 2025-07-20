@@ -2,6 +2,7 @@ import sys
 import traceback
 from datetime import datetime
 
+
 class ErrorLogger:
     _logFile = "errors.log"
     _executionSerial = 0
