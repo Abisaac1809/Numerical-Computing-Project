@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from Common.Helpers.ErrorHandling.Exceptions import *
-from Common.Structures.LinkedList import LinkedList
-from Common.Structures.Queue import Queue
-from Common.Structures.Stack import Stack
+from Apps.Common.Helpers.ErrorHandling.Exceptions import *
+from Apps.Common.Structures.LinkedList import LinkedList
+from Apps.Common.Structures.Queue import Queue
+from Apps.Common.Structures.Stack import Stack
 import numpy as np
 
 

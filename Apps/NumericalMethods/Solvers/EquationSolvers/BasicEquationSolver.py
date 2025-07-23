@@ -1,4 +1,4 @@
-from Solvers.EquationSolvers.AbstractEquationSolver import AbstractEquationSolver
+from Apps.NumericalMethods.Solvers.EquationSolvers.AbstractEquationSolver import AbstractEquationSolver
 
 
 class BasicEquationSolver(AbstractEquationSolver):

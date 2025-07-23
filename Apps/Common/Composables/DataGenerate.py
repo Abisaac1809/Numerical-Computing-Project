@@ -42,8 +42,8 @@ class archiveGenerator():
         """
         if (not nameArchive or len(nameArchive) == 0):
             raise Exception("Manage-Error: La ruta es vacia.")
-        
-        self.__nameArchive
+        print(nameArchive)
+        self.__nameArchive = nameArchive
 
     def __setOrCreateFiles(self, nameArchive, content = "", bool = False):#metodo polimorfico
         
@@ -65,7 +65,7 @@ class archiveGenerator():
         except FileNotFoundError as e:
             print("Manage-Error: El archivo no ha sido encontrado", e)
 
-    def archiveDataGenerator(self, row = 3, colum = 3):
+    def archiveDataGenerator(self, row = 3, colum = 4):
         """
         Genera archivo con datos aleatorios.
 
