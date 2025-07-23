@@ -6,7 +6,6 @@ def generateMatrixFiles(generator: archiveGenerator, count: int) -> list[str]:
     files = []
     for i in range(1, count + 1):
         filename = f"matrix_{i}.txt"
-        print(filename)
         generator.setName(filename)
         generator.archiveDataGenerator(3, 4)
         files.append(filename)

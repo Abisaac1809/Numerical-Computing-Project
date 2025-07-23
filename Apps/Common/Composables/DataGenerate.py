@@ -45,23 +45,15 @@ class archiveGenerator():
         print(nameArchive)
         self.__nameArchive = nameArchive
 
-    def __setOrCreateFiles(self, nameArchive, content = "", bool = False):#metodo polimorfico
-        
+    def __setOrCreateFiles(self, nameArchive, content = "", overwrite = False):
         if (not nameArchive or len(nameArchive) == 0):
             raise Exception("Manage-Error: El nombre esta Vacio.")
-        
-        try: #usamos try en este constexto ya que OPEN es un objeto externo a nuestra clase
-            if (not content or len(content) == 0):
-                archive = open(self.__router+"\\"+nameArchive+".txt", "x")
-                return
-            
-            archive = open(self.__router+"\\"+nameArchive, "a")#requiere que el nombre venga con su extencion. 
-            
-            if (bool == True):
-                archive.write(content+"\n")
-            else:
-                archive.write(content)
-
+        try:
+            filePath = self.__router + "\\" + nameArchive
+            mode = 'w' if overwrite else 'a'
+            with open(filePath, mode) as archive:
+                if content:
+                    archive.write(content)
         except FileNotFoundError as e:
             print("Manage-Error: El archivo no ha sido encontrado", e)
 
@@ -74,15 +66,17 @@ class archiveGenerator():
         """
         arrayBi = []
 
-        if(row > 0 and colum > 0):
+        if row > 0 and colum > 0:
             arrayBi = [[random.randint(-30, 30) for j in range(colum)] for i in range(row)]
 
+            # Construir el contenido completo como string
+            lines = []
             for i in range(len(arrayBi)):
-                for j in range(len(arrayBi[0])):
-                    if(j == (len(arrayBi[0]) - 1)):
-                        self.__setOrCreateFiles(self.__nameArchive, str(arrayBi[i][j]), i < (len(arrayBi) - 1))
-                    else:
-                        self.__setOrCreateFiles(self.__nameArchive, str(arrayBi[i][j])+"/")
+                line = '/'.join(str(x) for x in arrayBi[i])
+                lines.append(line)
+            content = '\n'.join(lines) + '\n'
+            # Sobrescribir el archivo con todo el contenido
+            self.__setOrCreateFiles(self.__nameArchive, content, overwrite=True)
 
     def __utilDirectory(self, router):
         
