@@ -1,4 +1,4 @@
-from Common.Helpers.ErrorHandling.Exceptions import *
+from Apps.Common.Helpers.ErrorHandling.Exceptions import *
 import numpy as np
 
 

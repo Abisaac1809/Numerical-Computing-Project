@@ -1,5 +1,5 @@
-from Solvers.EquationSolvers.AbstractEquationSolver import AbstractEquationSolver
-from Solvers.MatrixOperators.MatrixOperations import MatrixOperations
+from Apps.NumericalMethods.Solvers.EquationSolvers.AbstractEquationSolver import AbstractEquationSolver
+from Apps.NumericalMethods.Solvers.MatrixOperators.MatrixOperations import MatrixOperations
 
 
 class MatrixEquationSolver(AbstractEquationSolver):

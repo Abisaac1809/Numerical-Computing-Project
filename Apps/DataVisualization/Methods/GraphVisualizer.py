@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from io import BytesIO
 import base64
-from PointADT import Point
+from Apps.Common.Repositories.DataModels.Point import Point
 from matplotlib.lines import Line2D
 
 class GraphVisualizer:
@@ -17,11 +17,7 @@ class GraphVisualizer:
             'C': {'color': 'green', 'marker': 's', 'label': 'Punto C'}
         }
         
-        points = []
-        current = pointsList.head
-        while current:
-            points.append(current.data)
-            current = current.next
+        points = list(pointsList)
         
         plottedTypes = set()
         for point in points:

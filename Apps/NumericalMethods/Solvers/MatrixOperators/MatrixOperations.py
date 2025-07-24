@@ -1,6 +1,6 @@
 import numpy as np
-from ...utils import MatrixValidator
-from Common.Helpers.ErrorHandling.Exceptions import *
+from Apps.NumericalMethods.utils import MatrixValidator
+from Apps.Common.Helpers.ErrorHandling.Exceptions import *
 
 
 class MatrixOperations:
@@ -28,11 +28,13 @@ class MatrixOperations:
         return result
 
     def multiply(self, a, b):
-        if isinstance(a, int) and isinstance(b, np.ndarray):
+        if isinstance(a, (int, float)) and isinstance(b, np.ndarray):
+            return self.scalarMultiply(b, a)
+        if isinstance(a, np.ndarray) and isinstance(b, (int, float)):
             return self.scalarMultiply(a, b)
         if isinstance(a, np.ndarray) and isinstance(b, np.ndarray):
             return self.multiplyMatrix(a, b)
-        else: 
+        else:
             raise ValueError("Error: Se han ingresado objetos inválidos")
         
     def multiplyMatrix(self, matrixA:np.ndarray, matrixB:np.ndarray):

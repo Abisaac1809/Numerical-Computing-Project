@@ -1,6 +1,6 @@
-from Solvers.EquationSolvers.AbstractEquationSolver import AbstractEquationSolver
-from Solvers.MatrixOperators.MatrixOperations import MatrixOperations
-from Solvers.MatrixOperators.MatrixDimensionsOperations import MatrixDimensionsOperations
+from Apps.NumericalMethods.Solvers.EquationSolvers.AbstractEquationSolver import AbstractEquationSolver
+from Apps.NumericalMethods.Solvers.MatrixOperators.MatrixOperations import MatrixOperations
+from Apps.NumericalMethods.Solvers.MatrixOperators.MatrixDimensionsOperations import MatrixDimensionsOperations
 
 class DimensionsEquationSolver(AbstractEquationSolver):
     def __init__(self):
