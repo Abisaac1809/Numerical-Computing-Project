@@ -1,6 +1,6 @@
 from django.urls import path
-from Apps.DataVisualization.views import data_visualization_views
+from Apps.DataVisualization.views import randomGraph
 
 urlpatterns = [
-    path("randomGraph/", data_visualization_views, name="getRandomGraphAndPoints"),
+    path("randomGraph/", randomGraph, name="randomGraph"),
 ]

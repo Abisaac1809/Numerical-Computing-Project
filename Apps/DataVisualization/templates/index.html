@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numerical Computing Project Results</title>
+    <title>Resultados del Proyecto de Cálculo Numérico</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,7 +60,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Numerical Computing Project Results</h1>
+        <h1>Numerical Computing Project</h1>
 
         {% if alert_message %}
             <div class="alert">
@@ -69,28 +69,34 @@
         {% endif %}
 
         <div class="graph-container">
-            <h2>3D Point Visualization</h2>
+            <h2>Visualización 3D de Puntos</h2>
             {% if plot_url %}
-                <img src="{{ plot_url }}" alt="3D Plot of Points and Distances">
+                <img src="{{ plot_url }}" alt="Gráfico 3D de Puntos y Distancias">
             {% else %}
-                <p>No graph available to display.</p>
+                <p>No hay gráfico disponible para mostrar.</p>
             {% endif %}
         </div>
 
         <div class="data-section">
-            <h2>Calculated Data</h2>
+            <h2>Puntos Calculados</h2>
             {% if plot_results %}
-                {% for result in plot_results %}
+                {% for point in plot_results %}
                     <div class="data-item">
-                        <h3>Iteration {{ forloop.counter }}</h3>
-                        <p><strong>Point 1:</strong> (\$x_1\$, \$y_1\$, \$z_1\$) = ({{ result.point1X|floatformat:2 }}, {{ result.point1Y|floatformat:2 }}, {{ result.point1Z|floatformat:2 }})</p>
-                        <p><strong>Point 2:</strong> (\$x_2\$, \$y_2\$, \$z_2\$) = ({{ result.point2X|floatformat:2 }}, {{ result.point2Y|floatformat:2 }}, {{ result.point2Z|floatformat:2 }})</p>
-                        <p><strong>Point 3:</strong> (\$x_3\$, \$y_3\$, \$z_3\$) = ({{ result.point3X|floatformat:2 }}, {{ result.point3Y|floatformat:2 }}, {{ result.point3Z|floatformat:2 }})</p>
-                        <p><strong>Relative Error:</strong> {{ result.relativeError|floatformat:4 }}</p>
+                        <h3>Punto {{ forloop.counter }}</h3>
+                        <p><strong>Nombre:</strong> {{ point.name }}</p>
+                        <p><strong>Posición:</strong> ({{ point.position.0|floatformat:2 }}, {{ point.position.1|floatformat:2 }}, {{ point.position.2|floatformat:2 }})</p>
+                        {% if point.distancesBetweenPoints %}
+                            <p><strong>Distancias a otros puntos:</strong></p>
+                            <ul>
+                                {% for other_name, distance in point.distancesBetweenPoints.items %}
+                                    <li>{{ other_name }}: {{ distance|floatformat:4 }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                 {% endfor %}
             {% else %}
-                <p>No data available to display.</p>
+                <p>No hay datos disponibles para mostrar.</p>
             {% endif %}
         </div>
     </div>
