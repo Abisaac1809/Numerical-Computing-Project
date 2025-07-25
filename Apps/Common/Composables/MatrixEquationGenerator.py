@@ -6,9 +6,11 @@ from Apps.Common.Helpers.ErrorHandling.ErrorLogger import ErrorLogger
 class MatrixEquationGenerator:
     @staticmethod
     def generateComplexFormulas(fileName="MatrixFormulas.txt", outputPath=None, numFormulas=3):
-        outputPath = outputPath or os.getcwd()
+        # Usar Storage/Data en la raíz por defecto
+        if outputPath is None:
+            outputPath = os.path.join(os.getcwd(), "Storage", "Data")
+            os.makedirs(outputPath, exist_ok=True)
         fullPath = os.path.join(outputPath, fileName)
-        
         if not os.path.exists(outputPath):
             raise FileNotFoundError(f"El directorio {outputPath} no existe")
         

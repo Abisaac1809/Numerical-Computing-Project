@@ -1,5 +1,5 @@
 import numpy as np
-from Repositories.CustomNumbers.Number import Number
+from Apps.Common.Repositories.CustomNumbers.Number import Number
 
 class Binary(Number):
     _digits: np.ndarray = np.array(["0", "1"])

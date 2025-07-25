@@ -1,5 +1,5 @@
 import numpy as np
-from Repositories.CustomNumbers.Number import Number
+from Apps.Common.Repositories.CustomNumbers.Number import Number
 
 class Hexadecimal(Number):
     _digits = np.array(

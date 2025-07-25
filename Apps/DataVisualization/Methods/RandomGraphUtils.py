@@ -1,24 +1,35 @@
+import uuid
 import numpy as np
 from Apps.Common.Composables.DataGenerate import archiveGenerator
 from Apps.Common.Repositories.DataModels.Point import Point  
+from Apps.Common.Helpers.FileReaders.NumberScanner import NumberScanner
 
 def generateMatrixFiles(generator: archiveGenerator, count: int) -> list[str]:
+    numberScanner = NumberScanner()
     files = []
     for i in range(1, count + 1):
-        filename = f"matrix_{i}.txt"
+        serial = uuid.uuid4().hex[:8]
+        filename = f"{serial}_matriz{i}_{serial}.txt"
         generator.setName(filename)
         generator.archiveDataGenerator(3, 4)
+        numberScanner.scanAnalizeAndWriteResults(filename)
         files.append(filename)
     return files
 
 def loadMatrices(variableNames: list[str], matrixFiles: list[str]) -> dict[str, np.ndarray]:
+    import os
+    data_dir = os.path.join(os.getcwd(), "Storage", "Data")
     matrices = {}
     for name, fname in zip(variableNames, matrixFiles):
-        matrices[name] = np.loadtxt(fname, delimiter='/')
+        file_path = os.path.join(data_dir, fname)
+        matrices[name] = np.loadtxt(file_path, delimiter='/')
     return matrices
 
 def loadFormulas(formulaFile: str) -> list[str]:
-    with open(formulaFile) as f:
+    import os
+    data_dir = os.path.join(os.getcwd(), "Storage", "Data")
+    file_path = os.path.join(data_dir, formulaFile)
+    with open(file_path) as f:
         return [line.strip() for line in f.readlines()]
 
 def resolveMatrixFormulas(equationSolver, formulas: list[str], matrices: dict[str, np.ndarray]) -> list[np.ndarray]:

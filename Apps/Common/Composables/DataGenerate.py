@@ -5,7 +5,11 @@ class archiveGenerator():
     __router = ""
     __nameArchive = ""
 
-    def __init__(self, nameArchive = "generalArchive.bin", router = os.getcwd()):#constructor polimorfico
+    def __init__(self, nameArchive = "generalArchive.bin", router = None):#constructor polimorfico
+        # Usar Storage/Data en la raíz por defecto
+        if router is None:
+            router = os.path.join(os.getcwd(), "Storage", "Data")
+            os.makedirs(router, exist_ok=True)
         """
         Crear o modificar archivos. 
         

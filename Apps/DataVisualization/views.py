@@ -7,6 +7,7 @@ from Apps.NumericalMethods.Solvers.MatrixOperators.SystemOfEquationsSolver impor
 from Apps.Common.Repositories.DataModels.Point import Point
 from Apps.DataVisualization.Methods.GraphVisualizer import GraphVisualizer
 from Apps.Common.Composables.MathReport import MathReport
+from Apps.Common.Helpers.FileReaders.NumberScanner import NumberScanner
 from datetime import datetime, timedelta
 import numpy as np
 
@@ -18,11 +19,9 @@ def randomGraph(request):
     client_ip = request.META.get('REMOTE_ADDR')
     current_time = datetime.now()
 
-    # Rate limiting logic
     if client_ip not in last_access_times:
         last_access_times[client_ip] = []
     
-    # Remove access times older than 1 minute
     last_access_times[client_ip] = [
         t for t in last_access_times[client_ip] if current_time - t < timedelta(minutes=1)
     ]
@@ -36,11 +35,11 @@ def randomGraph(request):
     generator = archiveGenerator()
     equationSolver = MatrixEquationSolver()
     gaussSolver = SystemOfEquationsSolver()
-    report = MathReport("MathReport.txt")
     variableNames = ['A', 'B', 'C']
 
     matrixFiles: list[str] = generateMatrixFiles(generator, 3)
     MatrixEquationGenerator.generateComplexFormulas()
+    report = MathReport(matrixFiles[0])
 
     matrixs: dict[str, np.ndarray] = loadMatrices(variableNames, matrixFiles)
     formulas: list[str] = loadFormulas("MatrixFormulas.txt")
@@ -49,17 +48,17 @@ def randomGraph(request):
     points: list[Point] = solvePoints(gaussSolver, equationResults, variableNames)
     setPointsGroup(points)
     image: str = GraphVisualizer.plotPointsAndDistances3D(points)
-   
+    
     report.writeOriginalMatrices(matrixs)
     report.writeFormulasAndResults(formulas, equationResults)
     report.writeSystemsAndSolutions(equationResults, points)
     report.writeDistancesBetweenPoints(points)
     
-    # Convertir objetos Point a diccionarios para el template
+
     plot_results = [p.toDict() for p in points]
     context = {
-        'plot_url': image,  # imagen generada
-        'plot_results': plot_results,  # lista de puntos como dict
+        'plot_url': image,
+        'plot_results': plot_results, 
         'matrices': matrixs,
         'formulas': formulas,
         'equationResults': equationResults

@@ -1,4 +1,4 @@
-from Structures.LinkedList import LinkedList
+from Apps.Common.Structures.LinkedList import LinkedList
 
 
 class NumeralSystem:

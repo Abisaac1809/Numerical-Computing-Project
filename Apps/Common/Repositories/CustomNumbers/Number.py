@@ -1,7 +1,7 @@
 from __future__ import annotations
 import numpy as np
 from abc import ABC, abstractmethod
-from Structures.LinkedList import LinkedList
+from Apps.Common.Structures.LinkedList import LinkedList
 
 class Number(ABC):
     __digits = None
