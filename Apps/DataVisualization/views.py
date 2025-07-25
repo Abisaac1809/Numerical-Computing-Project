@@ -7,6 +7,8 @@ from Apps.NumericalMethods.Solvers.MatrixOperators.SystemOfEquationsSolver impor
 from Apps.Common.Repositories.DataModels.Point import Point
 from Apps.DataVisualization.Methods.GraphVisualizer import GraphVisualizer
 import numpy as np
+from Apps.Common.Composables.MathReport import MathReport
+
 from .Methods.RandomGraphUtils import *
 
 last_access_times = {}
@@ -33,6 +35,7 @@ def data_visualization_view(request):
     generator = archiveGenerator()
     equationSolver = MatrixEquationSolver()
     gaussSolver = SystemOfEquationsSolver()
+    report = MathReport("MathReport.txt")
     variableNames = ['A', 'B', 'C']
 
     matrixFiles: list[str] = generateMatrixFiles(generator, 3)
@@ -45,7 +48,11 @@ def data_visualization_view(request):
     points: list[Point] = solvePoints(gaussSolver, equationResults, variableNames)
     setPointsGroup(points)
     image: str = GraphVisualizer.plotPointsAndDistances3D(points)
-    print(image)
+   
+    report.writeOriginalMatrices(matrixs)
+    report.writeFormulasAndResults(formulas, equationResults)
+    report.writeSystemsAndSolutions(equationResults, points)
+    report.writeDistancesBetweenPoints(points)
     return render(request, 'index.html')
 
 
