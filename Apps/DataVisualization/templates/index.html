@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numerical Computing Project Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: auto;
+        }
+        h1, h2 {
+            color: #24292f;
+        }
+        .graph-container {
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+        .graph-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+        .data-section {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .data-item {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Numerical Computing Project Results</h1>
+
+        {% if alert_message %}
+            <div class="alert">
+                {{ alert_message }}
+            </div>
+        {% endif %}
+
+        <div class="graph-container">
+            <h2>3D Point Visualization</h2>
+            {% if plot_url %}
+                <img src="{{ plot_url }}" alt="3D Plot of Points and Distances">
+            {% else %}
+                <p>No graph available to display.</p>
+            {% endif %}
+        </div>
+
+        <div class="data-section">
+            <h2>Calculated Data</h2>
+            {% if plot_results %}
+                {% for result in plot_results %}
+                    <div class="data-item">
+                        <h3>Iteration {{ forloop.counter }}</h3>
+                        <p><strong>Point 1:</strong> (\$x_1\$, \$y_1\$, \$z_1\$) = ({{ result.point1X|floatformat:2 }}, {{ result.point1Y|floatformat:2 }}, {{ result.point1Z|floatformat:2 }})</p>
+                        <p><strong>Point 2:</strong> (\$x_2\$, \$y_2\$, \$z_2\$) = ({{ result.point2X|floatformat:2 }}, {{ result.point2Y|floatformat:2 }}, {{ result.point2Z|floatformat:2 }})</p>
+                        <p><strong>Point 3:</strong> (\$x_3\$, \$y_3\$, \$z_3\$) = ({{ result.point3X|floatformat:2 }}, {{ result.point3Y|floatformat:2 }}, {{ result.point3Z|floatformat:2 }})</p>
+                        <p><strong>Relative Error:</strong> {{ result.relativeError|floatformat:4 }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No data available to display.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
