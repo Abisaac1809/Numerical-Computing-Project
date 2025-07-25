@@ -26,4 +26,4 @@ def generateRandomGraphAndPoints(request):
     setPointsGroup(points)
     image: str = GraphVisualizer.plotPointsAndDistances3D(points)
     print(image)
-    return JsonResponse({'image': image, 'points': [point.toDict() for point in points]})
+    return render(request, 'index.html')
