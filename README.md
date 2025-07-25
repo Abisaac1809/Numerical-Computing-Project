@@ -1,73 +1,91 @@
 # Numerical Computing Project
 
-Este repositorio contiene el código desarrollado para el proyecto de la materia **Cálculo Numérico** de la carrera de Ingeniería en Computación. Este proyecto tiene como objetivo integrar herramientas matemáticas y computacionales aplicadas a problemas complejos, con un enfoque particular en operaciones numéricas, álgebra lineal, métodos iterativos y optimización, utilizando Python y sus bibliotecas.
+## Integración de herramientas matemáticas computacionales para resolver operaciones numéricas con Python y sus librerías
 
-## Características del Proyecto
 
-### Funcionalidades Actuales
 
-1.  **Determinación de Cifras Significativas:**
-    * Cálculo del número de cifras significativas de un valor.
-2.  **Sistemas Numéricos y Operaciones Elementales:**
-    * Representación y operaciones en sistemas decimal, hexadecimal y binario.
-3.  **Cálculo de Errores:**
-    * **Errores Absolutos y Relativos.**
-    * **Errores por Truncamiento y Propagación.**
-4.  **Resolución de Sistemas de Ecuaciones Lineales:**
-    * **Método de Gauss-Jordan:** Incluye pivoteo parcial, escalonado y completo para mayor precisión y estabilidad numérica.
-    * **Método de Gauss-Seidel:** Para la resolución iterativa de sistemas de ecuaciones.
-5.  **Resolución de Ecuaciones con Variables (Numéricas y Matriciales):**
-    * **Ecuaciones con variables numéricas:** Resolución de ecuaciones donde las incógnitas son números.
-    * **Ecuaciones con variables matriciales:** Resolución de ecuaciones donde las incógnitas son matrices.
 
-### Tecnologías Utilizadas
+## 🚀 Acerca del Proyecto
 
-* **Lenguaje de Programación:** Python.
-* **Gestor de Dependencias:** Virtualenv y archivo `requirements.txt`.
+Esta aplicación web de visualización de datos numéricos, desarrollada con **Django y Python**, tiene como objetivo principal generar y presentar gráficas de puntos aleatorios en un entorno interactivo. Más allá de la visualización, el sistema realiza complejas operaciones matemáticas computacionales, como la resolución de sistemas de ecuaciones lineales mediante el método de Gauss-Jordan, y proporciona un análisis detallado de los datos numéricos involucrados.
 
-### Arquitectura del Proyecto
+El programa está diseñado para ser accesible a través de una única URL principal, desde donde los usuarios pueden interactuar con la gráfica generada y obtener información sobre los puntos. La capacidad de generar nuevas gráficas dinámicamente mediante solicitudes a la API interna, junto con el registro exhaustivo de resultados y errores, lo convierte en una herramienta robusta para el estudio y análisis de problemas numéricos.
 
-El punto de entrada principal del programa es el archivo `src/main.py`. Todos los módulos y componentes adicionales se encuentran organizados dentro de la carpeta `src`.
+---
 
-## Instalación y Uso
+## ✨ Características Principales
 
-### Requisitos Previos
+* **Generación Dinámica de Gráficas:** Crea y visualiza gráficas 2D con puntos generados aleatoriamente.
+* **Operaciones Numéricas Avanzadas:** Procesa matrices y resuelve sistemas de ecuaciones utilizando el método de Gauss-Jordan.
+* **Análisis Numérico Detallado:** Genera un estudio de cada número, incluyendo cifras significativas, validez y posibles operaciones elementales.
+* **Reporte de Resultados Formales:** Proporciona archivos con las matrices originales, resultados de fórmulas, resultados de Gauss-Jordan y distancias entre puntos, todo en notación formal.
+* **Trazabilidad de Errores:** Registra errores en archivos de log dedicados, detallando tipo, ubicación y momento del fallo.
+* **Monitoreo de Precisión:** Calcula y guarda el error relativo de las iteraciones para evaluar la validez y precisión de los cálculos numéricos.
+* **Interfaz Web Intuitiva:** Acceso sencillo a través de una URL para interactuar con la visualización y funcionalidades.
 
-1. Tener instalado [Python 3.8+](https://www.python.org/).
-2. Tener instalado Virtualenv:
+---
 
-   ```bash
-   pip install virtualenv
-   ```
+## 🛠️ Tecnologías Utilizadas
 
-### Instrucciones de Instalación
+La aplicación está construida sobre un stack tecnológico robusto, utilizando **Python** como lenguaje principal y **Django** como framework web.
 
-1. Clonar este repositorio:
+* **Aplicación:** Aplicación de Visualización de Datos Numéricos `v2.0.0`
+* **Lenguaje de Programación:** Python (se recomienda 3.9 o superior)
+* **Framework Web:** Django `5.2.4`
+* **Base de Datos:** SQLite `(integrado con Django ORM)`
+* **Frontend:** HTML, CSS
 
-   ```bash
-   git clone https://github.com/Abisaac1809/Numerical-Computing-Project.git
-   ```
-2. Navegar al directorio del proyecto:
+**Librerías Python Principales:**
 
-   ```bash
-   cd Numerical-Computing-Project
-   ```
-3. Crear y activar un entorno virtual:
+* `numpy==2.2.6`: Fundamental para todas las operaciones numéricas y matriciales.
+* `matplotlib==3.10.3`: Utilizada para la generación y renderización de las gráficas.
+* `asgiref==3.9.1`: Soporte ASGI para Django.
+* `sqlparse==0.5.3`: Parseo de SQL, utilizado por Django ORM.
+* Otras dependencias como `contourpy`, `cycler`, `fonttools`, `kiwisolver`, `packaging`, `pillow`, `pyparsing`, `python-dateutil`, `six`, y `tzdata` para funcionalidades de Matplotlib y Django.
 
-   ```bash
-   virtualenv -p python env
-   env/Scripts/activate
-   ```
-4. Instalar las dependencias:
+Para la lista completa y exacta de dependencias, consulte el archivo `requirements.txt`.
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-### Ejecución del Programa
+## ⚙️ Configuración y Ejecución
 
-Ejecutar el archivo principal:
+Siga estos pasos para configurar y ejecutar la aplicación en su entorno local (entorno de desarrollo).
+
+### Pre-requisitos
+
+Asegúrese de tener **Python (3.9 o superior)** instalado en su sistema. Se recomienda el uso de `virtualenv` para gestionar las dependencias del proyecto de forma aislada.
+
+### Clonar el Repositorio
+
+Abra su terminal o línea de comandos y ejecute:
 
 ```bash
-python src/main.py
-```
+git clone [https://github.com/Abisaac1809/Numerical-Computing-Project.git](https://github.com/Abisaac1809/Numerical-Computing-Project.git)
+cd Numerical-Computing-Project
+
+### Configurar Entorno Virtual
+
+1.  **Instale `virtualenv`** (si no lo tiene globalmente):
+    ```bash
+    pip install virtualenv
+    ```
+2.  **Cree el entorno virtual:**
+    ```bash
+    virtualenv env
+    ```
+3.  **Active el entorno virtual:**
+    * **En Windows:**
+        ```bash
+        .\env\Scripts\activate
+        ```
+    * **En macOS/Linux:**
+        ```bash
+        source env/bin/activate
+        ```
+
+### Instalar Dependencias
+
+Con el entorno virtual activado, instale todas las librerías necesarias:
+
+```bash
+pip install -r requirements.txt
