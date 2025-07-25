@@ -1,15 +1,14 @@
 import os
 import numpy as np
 from pathlib import Path
-from Helpers.ErrorHandling.Exceptions import *
-from Helpers.ErrorHandling.ErrorLogger import ErrorLogger
+from Apps.Common.Helpers.ErrorHandling.Exceptions import *
+from Apps.Common.Helpers.ErrorHandling.ErrorLogger import ErrorLogger
 
 
 class FileReader:
 
     def __init__(self):
-        self.__binaryFilesDir = Path("Storage/BinaryFiles")
-        self.__binaryFilesDir.mkdir(parents=True, exist_ok=True)
+        self.__binaryFilesDir = Path("") 
 
     def getFileList(self) -> np.ndarray:
         try:

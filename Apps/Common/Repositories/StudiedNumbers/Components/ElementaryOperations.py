@@ -1,9 +1,9 @@
-from Repositories.CustomNumbers.Number import Number
-from Repositories.CustomNumbers.Binary import Binary
-from Repositories.CustomNumbers.Decimal import Decimal
-from Repositories.CustomNumbers.Hexadecimal import Hexadecimal
+from Apps.Common.Repositories.CustomNumbers.Number import Number
+from Apps.Common.Repositories.CustomNumbers.Binary import Binary
+from Apps.Common.Repositories.CustomNumbers.Decimal import Decimal
+from Apps.Common.Repositories.CustomNumbers.Hexadecimal import Hexadecimal
+from Apps.Common.Structures.LinkedList import LinkedList
 from Apps.Common.Repositories.StudiedNumbers.Components.NumeralSystem import NumeralSystem
-from Structures.LinkedList import LinkedList
 
 
 class ElementaryOperations:

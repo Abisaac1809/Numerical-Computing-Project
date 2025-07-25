@@ -1,23 +1,34 @@
-
-from Common.Helpers.ErrorHandling.Exceptions import *
-from Common.Helpers.ErrorHandling.ErrorLogger import ErrorLogger
-from Common.Repositories.StudiedNumbers.StudiedNumber import StudiedNumber
 from Apps.Common.Helpers.FileReaders.FileReader import FileReader
-from Common.Composables.FileWriter import FileWriter
+from Apps.Common.Helpers.ErrorHandling.Exceptions import *
+from Apps.Common.Helpers.ErrorHandling.ErrorLogger import ErrorLogger
+from Apps.Common.Repositories.StudiedNumbers.StudiedNumber import StudiedNumber
+from Apps.Common.Composables.FileWriter import FileWriter
 import numpy as np
 
 class NumberScanner:
     def scanAnalizeAndWriteResults(self, fileName:str) -> None:
         fileWriter = FileWriter()
-        fileReader = FileReader()
-        
         readedFileSerial = fileName.split("_")[2].split(".")[0]
-        scannedValues = fileReader.readBinaryFile(fileName)
+        scannedValues = self.readMatrixFile(fileName)
 
         numbers = np.empty((len(scannedValues), len(scannedValues[0])), dtype="object")
 
         self.__fillNumbersArray(numbers, scannedValues)
         fileWriter.writeResultsToFile(numbers, readedFileSerial)
+
+    def readMatrixFile(self, fileName: str) -> list[list[str]]:
+        import os
+        data_dir = os.path.join(os.getcwd(), "Storage", "Data")
+        file_path = os.path.join(data_dir, fileName)
+        result = []
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                columns = line.split("/")
+                result.append([col.strip() for col in columns if col.strip() != ""])
+        return result
 
     def __fillNumbersArray(
         self, numbers: np.ndarray, scannedValues: np.ndarray) -> None:

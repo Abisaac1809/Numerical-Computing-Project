@@ -6,40 +6,40 @@ from Apps.Common.Composables.DataGenerate import archiveGenerator
 from Apps.NumericalMethods.Solvers.MatrixOperators.SystemOfEquationsSolver import SystemOfEquationsSolver
 from Apps.Common.Repositories.DataModels.Point import Point
 from Apps.DataVisualization.Methods.GraphVisualizer import GraphVisualizer
-import numpy as np
 from Apps.Common.Composables.MathReport import MathReport
+from Apps.Common.Helpers.FileReaders.NumberScanner import NumberScanner
+from datetime import datetime, timedelta
+import numpy as np
 
 from .Methods.RandomGraphUtils import *
 
 last_access_times = {}
 
-def data_visualization_view(request):
+def randomGraph(request):
     client_ip = request.META.get('REMOTE_ADDR')
     current_time = datetime.now()
 
-    # Rate limiting logic
     if client_ip not in last_access_times:
         last_access_times[client_ip] = []
     
-    # Remove access times older than 1 minute
     last_access_times[client_ip] = [
         t for t in last_access_times[client_ip] if current_time - t < timedelta(minutes=1)
     ]
 
     if len(last_access_times[client_ip]) >= 5:
         alert_message = "Access limit exceeded: You can only visit this page 5 times per minute."
-        return render(request, 'DataVisualization/data_visualization.html', {'alert_message': alert_message})
+        return render(request, 'index.html', {'alert_message': alert_message})
     
     last_access_times[client_ip].append(current_time)
-    #------------------------------------------------------------------------
+
     generator = archiveGenerator()
     equationSolver = MatrixEquationSolver()
     gaussSolver = SystemOfEquationsSolver()
-    report = MathReport("MathReport.txt")
     variableNames = ['A', 'B', 'C']
 
     matrixFiles: list[str] = generateMatrixFiles(generator, 3)
     MatrixEquationGenerator.generateComplexFormulas()
+    report = MathReport(matrixFiles[0])
 
     matrixs: dict[str, np.ndarray] = loadMatrices(variableNames, matrixFiles)
     formulas: list[str] = loadFormulas("MatrixFormulas.txt")
@@ -48,11 +48,21 @@ def data_visualization_view(request):
     points: list[Point] = solvePoints(gaussSolver, equationResults, variableNames)
     setPointsGroup(points)
     image: str = GraphVisualizer.plotPointsAndDistances3D(points)
-   
+    
     report.writeOriginalMatrices(matrixs)
     report.writeFormulasAndResults(formulas, equationResults)
     report.writeSystemsAndSolutions(equationResults, points)
     report.writeDistancesBetweenPoints(points)
-    return render(request, 'index.html')
+    
+
+    plot_results = [p.toDict() for p in points]
+    context = {
+        'plot_url': image,
+        'plot_results': plot_results, 
+        'matrices': matrixs,
+        'formulas': formulas,
+        'equationResults': equationResults
+    }
+    return render(request, 'index.html', context)
 
 

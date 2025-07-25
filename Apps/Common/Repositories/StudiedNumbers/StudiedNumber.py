@@ -1,4 +1,4 @@
-from Helpers.ErrorHandling.Exceptions import *
+from Apps.Common.Helpers.ErrorHandling.Exceptions import *
 from Apps.Common.Repositories.StudiedNumbers.Components.SignificantFigures import SignificantFigures
 from Apps.Common.Repositories.StudiedNumbers.Components.NumeralSystem import NumeralSystem
 from Apps.Common.Repositories.StudiedNumbers.Components.Bases import Bases

@@ -3,8 +3,16 @@ from fractions import Fraction
 import datetime
 
 class MathReport:
-    def __init__(self, reportFile="math_report.txt"):
-        self.reportFile = reportFile
+    def __init__(self, reportFile="mathReport"):
+        import os
+        import uuid
+        from datetime import datetime
+        results_dir = os.path.join(os.getcwd(), "Storage", "Results")
+        os.makedirs(results_dir, exist_ok=True)
+        fecha_actual = datetime.now().strftime("%Y%m%d")
+        serial = uuid.uuid4().hex[:8]
+        nombre_archivo = f"{reportFile}_{fecha_actual}_{serial}.txt"
+        self.reportFile = os.path.join(results_dir, nombre_archivo)
         self._initializeReport()
 
     def _initializeReport(self):
